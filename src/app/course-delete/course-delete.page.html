@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>course-delete</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <h2>Course Delete</h2>
+    <div>
+      <h3>
+        Are you sure want to delete this course: {{courseData.courseName}} ?
+      </h3>
+    </div>
+    <ion-button (click)="deleteCourse()">Delete</ion-button>
+  </div>
+</ion-content>

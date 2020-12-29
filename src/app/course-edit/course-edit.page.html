@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>course-edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <h2>Course Edit</h2>
+    <div>
+      <label>Course Name:
+        <input [(ngModel)]="courseData.courseName" placeholder="Course Name"/>
+      </label><br>
+    </div>
+    <ion-button (click)="editCourse()">Save</ion-button>
+  </div>
+</ion-content>
