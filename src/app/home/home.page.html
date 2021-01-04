@@ -18,20 +18,38 @@
     </ion-button>
   </div>
 
-  <div id="container">
-    <ng-container *ngFor="let course of courses;">
-      <ion-item>
-        {{course.courseName}}
-        <ion-button (click)="delete(course.id)">
-          Delete
-        </ion-button> 
-        <ion-button (click)="edit(course.id)">
-          Edit
-        </ion-button>
-        <br>
-      </ion-item>
-      
-    </ng-container>
+  
+    <div *ngFor="let course of courses;">
+      <ion-card>
+        <ion-item>
+          <h1>{{course.courseName}}</h1> 
+          <ion-button slot="end" (click)="delete(course.id)">
+            Delete
+          </ion-button> 
+          <ion-button slot="end" (click)="edit(course.id)">
+            Edit
+          </ion-button>
+        </ion-item >
+        <ion-item>
+          <ion-button size="small" (click)="addClassroom(course.id);">
+            New Classroom
+          </ion-button>
+        </ion-item>
+          <div>
+            <ng-container *ngFor="let classroom of course.classrooms;">
+              <ion-grid>
+                <ion-row class="ion-align-items-center">
+                  <ion-col>
+                    {{classroom.classroomName}}
+                  </ion-col>
+                  <ion-col class="ion-align-items-end">
+                    <ion-button (click)="goToClassroom(classroom.id)" size="small" color="secondary"> Click to open </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ng-container>
+          </div> 
+      </ion-card>    
+    </div>
     
-  </div>
 </ion-content>

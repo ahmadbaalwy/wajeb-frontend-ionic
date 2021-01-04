@@ -13,7 +13,7 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController, 
   ) {}
 
   @Input() credentials = {email:'', password:''}

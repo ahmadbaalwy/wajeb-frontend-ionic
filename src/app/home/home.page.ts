@@ -18,17 +18,22 @@ export class HomePage {
   constructor(private authService:AuthService, private courseService: CourseService, private router: Router) {
   }
 
- async ngOnInit(){
+ngOnInit(){}
+
+ async ionViewDidEnter(){
   firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
     if (user) {
       this.userEmail = user.email;
       this.userToken = await user.getIdToken();
+      console.log(this.userToken);
       this.courseService.getCourses(this.userToken).subscribe(
         data => {
           this.courses = data;
+          console.log(this.courses);
         },
         err => {
-          this.courses = JSON.parse(err.error).message;
+          //this.courses = err.error.message;
+          this.courses = [{id: 1, courseName:err.message, user:"test", classrooms:[]}];
         }
       );
     } else {
@@ -47,6 +52,17 @@ delete(courseId: any): void{
 }
 
 edit(courseId: any): void{
-  this.router.navigate(['/course-edit'], {queryParams: {courseId: courseId} });}
+  this.router.navigate(['/course-edit'], {queryParams: {courseId: courseId} });
+}
+
+goToClassroom(classroomId: any): void{
+  this.router.navigate(['/classroom-teacher-main'], {queryParams: {classroomId: classroomId} });
+}
+
+addClassroom(courseId): void{
+  this.router.navigate(['classroom-add'], {queryParams: {courseId: courseId} } )
+}
+
 
 }
+

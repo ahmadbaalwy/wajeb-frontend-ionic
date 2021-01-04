@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Classroom-edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <h2>Classroom Edit</h2>
+    <div>
+        <ion-item>
+          <ion-label>Classroom Name:</ion-label>
+          <ion-input [(ngModel)]="classroomData.classroomName" placeholder="Classroom Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Private Classroom:</ion-label>
+          <ion-checkbox  [(ngModel)]="classroomData.private"></ion-checkbox> 
+        </ion-item>
+        <ion-item>
+          <ion-label>Active: </ion-label>
+          <ion-checkbox [(ngModel)]="classroomData.active"></ion-checkbox> 
+        </ion-item>
+        <ion-item>
+          <ion-label>School Name:</ion-label>
+          <ion-input [(ngModel)]="classroomData.schoolName"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>Category :</ion-label>
+          <ion-input [(ngModel)]="classroomData.category"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>Start Date:</ion-label>
+          <ion-datetime [(ngModel)]="classroomData.startDate"></ion-datetime> 
+        </ion-item>
+        <ion-item>
+          <ion-label>End Date:</ion-label>
+          <ion-datetime [(ngModel)]="classroomData.endDate"></ion-datetime> 
+        </ion-item>
+        
+    </div>
+    <ion-button (click)="editClassroom()">Save</ion-button>
+  </div>
+</ion-content>

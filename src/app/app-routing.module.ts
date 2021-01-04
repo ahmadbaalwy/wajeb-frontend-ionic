@@ -31,6 +31,22 @@ const routes: Routes = [
     path: 'course-edit',
     loadChildren: () => import('./course-edit/course-edit.module').then( m => m.CourseEditPageModule)
   },
+  {
+    path: 'classroom-teacher-main',
+    loadChildren: () => import('./classroom-teacher-main/classroom-teacher-main.module').then( m => m.ClassroomTeacherMainPageModule)
+  },
+  {
+    path: 'classroom-edit',
+    loadChildren: () => import('./classroom-edit/classroom-edit.module').then( m => m.ClassroomEditPageModule)
+  },
+  {
+    path: 'classroom-delete',
+    loadChildren: () => import('./classroom-delete/classroom-delete.module').then( m => m.ClassroomDeletePageModule)
+  },
+  {
+    path: 'classroom-add',
+    loadChildren: () => import('./classroom-add/classroom-add.module').then( m => m.ClassroomAddPageModule)
+  },
 ];
 
 @NgModule({
