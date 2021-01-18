@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>طلاب في إنتظار موافقتك للتسجيل</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div *ngFor="let enrollment of enrollments;">
+    <ion-item *ngIf="enrollments.length">
+      <ion-label>
+        الاسم
+      </ion-label>
+      <ion-label>
+        تاريخ طلب التسجيل
+      </ion-label>
+     
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{enrollment.full_name}}
+      </ion-label>
+      <ion-label>
+        {{enrollment.request_date}}
+      </ion-label>
+      <ion-button (click)="approvePendingEnrollment(enrollment.enrollmentId);">
+        قبول التسجيل
+      </ion-button>
+    </ion-item>
+  </div>
+</ion-content>

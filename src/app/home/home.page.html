@@ -6,15 +6,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" dir="rtl">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">My Courses</ion-title>
+      <ion-title size="large" class="ion-text-center">برنامج الفصل</ion-title>
     </ion-toolbar>
   </ion-header>
   <div>
+    <h1>
+      المواد التي تدرسها:
+    </h1>
     <ion-button (click)="add()">
-      Add new course
+      مادة جديدة
     </ion-button>
   </div>
 
@@ -24,15 +27,15 @@
         <ion-item>
           <h1>{{course.courseName}}</h1> 
           <ion-button slot="end" (click)="delete(course.id)">
-            Delete
+            حذف
           </ion-button> 
           <ion-button slot="end" (click)="edit(course.id)">
-            Edit
+            تعديل
           </ion-button>
         </ion-item >
         <ion-item>
           <ion-button size="small" (click)="addClassroom(course.id);">
-            New Classroom
+            فصل دراسي جديد
           </ion-button>
         </ion-item>
           <div>
@@ -42,8 +45,11 @@
                   <ion-col>
                     {{classroom.classroomName}}
                   </ion-col>
+                  <ion-col>
+                    {{classroom.schoolName}}
+                  </ion-col>
                   <ion-col class="ion-align-items-end">
-                    <ion-button (click)="goToClassroom(classroom.id)" size="small" color="secondary"> Click to open </ion-button>
+                    <ion-button (click)="goToClassroom(classroom.id)" size="small" color="secondary"> فتح </ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>

@@ -1,0 +1,35 @@
+<ion-header dir="rtl">
+  <ion-toolbar>
+    <ion-title>الفصول التي قمت بالتسجيل فيها</ion-title>
+  </ion-toolbar>
+  <ion-item>
+    <ion-button size="mid" (click)="goToClassroomSearch();">بحث عن فصل دراسي</ion-button>
+  </ion-item>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div *ngFor="let enrollment of enrollments;">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          اسم الفصل: {{enrollment.classroom_name}}
+        </ion-item>
+        <ion-item>
+          اسم المادة: {{enrollment.course_name}}
+        </ion-item>
+        <ion-item>
+          اسم المدرسة: {{enrollment.school_name}}
+        </ion-item>
+        <ion-item>
+          اسم المدرس: {{enrollment.full_name}}
+        </ion-item>
+        <ion-button disabled="true" expand="block" *ngIf="enrollment.status=='pending'" >
+          في انتظار موافقة المدرس
+        </ion-button>
+        <ion-button (click)="goToClassroom(enrollment.classroomId);" expand="block" *ngIf="enrollment.status=='approved'" >
+          الدخول إلى هذا الفصل
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

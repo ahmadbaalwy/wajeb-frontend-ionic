@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Question-add</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div>
+    <h2>سؤال جديد</h2>
+    <div>
+        <ion-item>
+          <ion-label>نص السؤال</ion-label>
+          <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>درجة السؤال </ion-label>
+          <ion-input [(ngModel)]="questionData.score" placeholder="أدخل درجة السؤال"></ion-input> 
+        </ion-item>
+        
+        <ion-radio-group (ionChange)="selectAnswer($event)">
+          <ion-list-header>
+            <ion-label>الإجابة الصحيحة هي:</ion-label>
+          </ion-list-header>
+        <ion-item>
+          <ion-label>العبارة صحيحة </ion-label>
+          <ion-radio value=1></ion-radio> 
+        </ion-item>
+        <ion-item>
+          <ion-label>العبارة خاطئة</ion-label>
+          <ion-radio value=2></ion-radio> 
+        </ion-item>
+        </ion-radio-group>
+        
+        
+    </div>
+    <ion-button (click)="addQuestionTF()">Save</ion-button>
+  </div>
+</ion-content>

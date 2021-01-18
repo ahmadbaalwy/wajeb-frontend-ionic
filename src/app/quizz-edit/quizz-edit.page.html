@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Quizz-Edit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div>
+    <h2>Quizz Edit</h2>
+    <div>
+        <ion-item>
+          <ion-label>Quizz Name:</ion-label>
+          <ion-input [(ngModel)]="quizzData.quizzName" placeholder="Quizz Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Active: </ion-label>
+          <ion-checkbox [(ngModel)]="quizzData.active"></ion-checkbox> 
+        </ion-item>
+        <ion-item>
+          <ion-label text-wrap>Max number of allowed attempts:</ion-label>
+          <ion-input [(ngModel)]="quizzData.maxChances"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>Grades: </ion-label>
+          <ion-input [(ngModel)]="quizzData.grade"></ion-input> 
+        </ion-item>
+        
+    </div>
+    <ion-button (click)="editQuizz()">Save</ion-button>
+  </div>
+</ion-content>

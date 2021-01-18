@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-input [(ngModel)]="credentials.fullName" placeholder="Full Name"></ion-input>
+  <ion-input [(ngModel)]="credentials.email" placeholder="Username"></ion-input>
+  <ion-input [(ngModel)]="credentials.password" placeholder="Password" type="password"></ion-input>
+  <ion-radio-group (ionChange)="roleSelected($event)">
+    <ion-list-header>
+      <ion-label>نوع الحساب:</ion-label>
+    </ion-list-header>
+  <ion-item>
+    <ion-label>مدرس </ion-label>
+    <ion-radio value="teacher"></ion-radio> 
+  </ion-item>
+  <ion-item>
+    <ion-label>طالب</ion-label>
+    <ion-radio value="student"></ion-radio> 
+  </ion-item>
+  </ion-radio-group>
+  <ion-button expand="block" (click)="signupUser(credentials)">Register</ion-button>
+
+
+</ion-content>

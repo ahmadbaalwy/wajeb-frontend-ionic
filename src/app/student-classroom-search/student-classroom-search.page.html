@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>بحث عن فصل دراسي للتسجيل فيه</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <ion-item>
+    <ion-input [(ngModel)]="classroomSearchData.courseName" placeholder="اسم المادة"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="classroomSearchData.schoolName" placeholder="اسم المدرسة"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-button size="mid" (click)="searchForClassroom();">ابحث</ion-button>
+  </ion-item>
+
+  <ion-label *ngIf="classrooms.length">
+    <h3>نتائج البحث:</h3>
+  </ion-label>
+
+  <div *ngFor="let classroom of classrooms;">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          اسم المادة: {{classroom.course_name}}
+        </ion-item>
+        <ion-item>
+          اسم الفصل: {{classroom.classroom_name}}
+        </ion-item>
+        <ion-item>
+          اسم المدرسة: {{classroom.school_name}}
+        </ion-item>
+        <ion-item>
+          اسم المدرس: {{classroom.full_name}}
+        </ion-item>
+        <ion-item>
+          <ion-button *ngIf="classroom.status==null" (click)="addEnrollment(classroom.classroomId);">
+            طلب التسجيل
+          </ion-button>
+          <ion-button *ngIf="classroom.status=='pending'" disabled="true">
+            لقد قمت بطلب التسجيل سابقا - في انتظار موافقة المدرس
+          </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

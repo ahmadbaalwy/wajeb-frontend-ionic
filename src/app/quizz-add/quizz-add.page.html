@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>واجب جديد</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div>
+    <h2>واجب جديد</h2>
+    <div>
+        <ion-item>
+          <ion-label>عنوان الواجب</ion-label>
+          <ion-input [(ngModel)]="quizzData.quizzName" placeholder="عنوان الواجب"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>فعال </ion-label>
+          <ion-checkbox [(ngModel)]="quizzData.active"></ion-checkbox> 
+        </ion-item>
+        <ion-item>
+          <ion-label>عدد المحاولات الممكنة</ion-label>
+          <ion-input [(ngModel)]="quizzData.maxChances"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>درجة الواجب: </ion-label>
+          <ion-input [(ngModel)]="quizzData.grade"></ion-input> 
+        </ion-item>
+        
+    </div>
+    <ion-button (click)="addQuizz()">حفظ</ion-button>
+  </div>
+</ion-content>

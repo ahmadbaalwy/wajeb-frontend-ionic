@@ -43,6 +43,61 @@
       <ion-title>{{classroom.classroomName}}</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
+
+  <ion-content class="ion-padding" dir="rtl">
+    <div *ngIf="!quizzes.length">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Quizzes (0)
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button (click)="addQuizz(classroom.id)" expand="block">واجب جديد</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="quizzes.length">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            الواجبات ({{classroom.quizzes.length}})
+            <ion-button size="small">عرض الكل</ion-button>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button (click)="addQuizz(classroom.id)" expand="block">واجب جديد</ion-button>
+        </ion-card-content>
+        <div *ngFor="let quizz of classroom.quizzes;">
+            <ion-item>
+              {{quizz.quizzName}}
+              <ion-icon (click)="openQuizz(quizz.id);" slot="end" name="arrow-back-outline"></ion-icon>
+            </ion-item>
+      </div>
+      </ion-card>
+    </div>
+
+    <div>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            طلاب الفصل 
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-button  expand="block">عرض الكل</ion-button>
+          <ion-item>
+            طلاب مسجلين ({{approvedRequests}})
+            <ion-icon (click)="goToApprovedEnrollments(classroomId);"  slot="end" name="arrow-back-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            طلاب في إنتظار موافقتك ({{pendingRequests}})
+            <ion-icon (click)="goToPendingEnrollments(classroomId);" slot="end" name="arrow-back-outline"></ion-icon>
+          </ion-item>
+        </ion-card-content>
+        
+      </ion-card>
+    </div>
+    
   </ion-content>
 </div>

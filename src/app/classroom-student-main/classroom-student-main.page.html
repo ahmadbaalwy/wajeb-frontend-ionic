@@ -1,0 +1,85 @@
+<ion-menu side="start" content-id="main-content" autohide="true">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="mail" slot="start" (click)="goHome();"></ion-icon>
+        <ion-label (click)="goHome();">back to Home</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="paper-plane" slot="start"></ion-icon>
+        <ion-label>Outbox</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="heart" slot="start"></ion-icon>
+        <ion-label>Favorites</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="archive" slot="start"></ion-icon>
+        <ion-label>Archived</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="create-outline" slot="start" (click)="editClassroom(classroomId);"></ion-icon>
+        <ion-label >Edit this classroom</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="trash" slot="start" (click)="deleteClassroom(classroomId);"></ion-icon>
+        <ion-label >Delete this classroom</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{classroom.classroomName}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding" dir="rtl">
+    <div *ngIf="!quizzes.length">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            Quizzes (0)
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label>
+            لم يقم أستاذ الفصل بتفعيل أي واجب حتى الان
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="quizzes.length">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            الواجبات ({{classroom.quizzes.length}})
+            <ion-button size="small">عرض الكل</ion-button>
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          
+        </ion-card-content>
+        <div *ngFor="let quizz of classroom.quizzes;">
+            <ion-item>
+              {{quizz.quizzName}}
+              <ion-icon (click)="openQuizz(quizz.id);" slot="end" name="arrow-back-outline"></ion-icon>
+            </ion-item>
+      </div>
+      </ion-card>
+    </div>
+
+    
+    
+  </ion-content>
+</div>

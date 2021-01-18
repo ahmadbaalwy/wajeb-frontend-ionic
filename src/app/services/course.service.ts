@@ -22,7 +22,9 @@ export interface Classroom {
 }
 
 
-const API_URL = 'http://192.168.1.35:9000/api/courses/';
+
+
+const API_URL = 'http://wajeb-backend.azurewebsites.net/api/courses/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

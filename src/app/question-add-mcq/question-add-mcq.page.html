@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Question-add</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div>
+    <h2>سؤال جديد</h2>
+    <div>
+        <ion-item>
+          <ion-label>نص السؤال</ion-label>
+          <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>درجة السؤال </ion-label>
+          <ion-input [(ngModel)]="questionData.score" placeholder="أدخل درجة السؤال"></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>الإجابة رقم 1:</ion-label>
+          <ion-input [(ngModel)]="quizzAnswerData1.text"></ion-input> 
+          <ion-item>
+            <ion-label>إجابة صحيحة </ion-label>
+            <ion-checkbox [(ngModel)]="quizzAnswerData1.correct"></ion-checkbox> 
+          </ion-item>
+        </ion-item>
+        <ion-item>
+          <ion-label>الإجابة رقم 2:</ion-label>
+          <ion-input [(ngModel)]="quizzAnswerData2.text"></ion-input> 
+          <ion-item>
+            <ion-label>إجابة صحيحة </ion-label>
+            <ion-checkbox [(ngModel)]="quizzAnswerData2.correct"></ion-checkbox> 
+          </ion-item>
+        </ion-item>
+        <ion-item>
+          <ion-label>الإجابة رقم 3:</ion-label>
+          <ion-input [(ngModel)]="quizzAnswerData3.text"></ion-input> 
+          <ion-item>
+            <ion-label>إجابة صحيحة </ion-label>
+            <ion-checkbox [(ngModel)]="quizzAnswerData3.correct"></ion-checkbox> 
+          </ion-item>
+        </ion-item>
+        <ion-item>
+          <ion-label>الإجابة رقم 4:</ion-label>
+          <ion-input [(ngModel)]="quizzAnswerData4.text"></ion-input> 
+          <ion-item>
+            <ion-label>إجابة صحيحة </ion-label>
+            <ion-checkbox [(ngModel)]="quizzAnswerData4.correct"></ion-checkbox> 
+          </ion-item>
+        </ion-item>
+       
+    </div>
+    <ion-button (click)="addQuestionMCQ()">Save</ion-button>
+  </div>
+</ion-content>

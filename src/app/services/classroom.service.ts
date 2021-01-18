@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Quizz } from '../services/quizz.service';
+import { Enrollment } from './enrollment.service';
 //import { Classroom } from '../services/course.service';
 
 export class Classroom {
@@ -13,9 +15,23 @@ export class Classroom {
   startDate: Date;
   endDate: Date;
   courseId: number;
+  quizzes: Quizz[];
+  enrollments: Enrollment[];
 }
 
-const API_URL = 'http://192.168.1.35:9000/api/classrooms/';
+export class classroomSearch {
+  courseId: number;
+  course_name: string;
+  classroomId: number;
+  classroom_name: string;
+  school_name: string;
+  full_name: string;
+  status: string;
+}
+
+
+
+const API_URL = 'http://wajeb-backend.azurewebsites.net/api/classrooms/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -50,6 +66,12 @@ export class ClassroomService {
   deleteClassroom(classroomId: any): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
     return this.http.delete(API_URL + 'deleteClassroom', {headers: headers, params: {classroomId: classroomId}});
+  }
+
+  searchForClassroom(courseName: any, schoolName: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get<classroomSearch>(API_URL + 'searchForClassroom', {responseType: 'json', headers: headers, params: {courseName: courseName, schoolName: schoolName}});
+
   }
 
 }
