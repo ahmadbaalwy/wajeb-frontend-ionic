@@ -1,17 +1,18 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>course-edit</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Course Edit</h2>
+    <h2> تعديل بيانات المادة الدراسية</h2>
     <div>
-      <label>Course Name:
+      <label>اسم المادة:
         <input [(ngModel)]="courseData.courseName" placeholder="Course Name"/>
       </label><br>
     </div>
-    <ion-button (click)="editCourse()">Save</ion-button>
+    <ion-button (click)="editCourse()">تعديل</ion-button>
+    <ion-button (click)="cancelEdit()">تراجع</ion-button>
   </div>
 </ion-content>

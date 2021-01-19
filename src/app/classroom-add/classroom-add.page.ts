@@ -29,4 +29,8 @@ export class ClassroomAddPage implements OnInit {
      );
   }
 
+  cancel(){
+    this.router.navigate(['/home']);
+  }
+
 }

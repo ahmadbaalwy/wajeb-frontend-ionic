@@ -1,13 +1,13 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>Signup</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-input [(ngModel)]="credentials.fullName" placeholder="Full Name"></ion-input>
-  <ion-input [(ngModel)]="credentials.email" placeholder="Username"></ion-input>
-  <ion-input [(ngModel)]="credentials.password" placeholder="Password" type="password"></ion-input>
+<ion-content dir="rtl">
+  <ion-input [(ngModel)]="credentials.fullName" placeholder="أدخل الاسم الرباعي"></ion-input>
+  <ion-input [(ngModel)]="credentials.email" placeholder="البريد الإلكتروني"></ion-input>
+  <ion-input [(ngModel)]="credentials.password" placeholder="كلمة السر" type="password"></ion-input>
   <ion-radio-group (ionChange)="roleSelected($event)">
     <ion-list-header>
       <ion-label>نوع الحساب:</ion-label>
@@ -21,7 +21,7 @@
     <ion-radio value="student"></ion-radio> 
   </ion-item>
   </ion-radio-group>
-  <ion-button expand="block" (click)="signupUser(credentials)">Register</ion-button>
+  <ion-button expand="block" (click)="signupUser(credentials)">إنشاء حساب جديد</ion-button>
 
 
 </ion-content>

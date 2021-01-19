@@ -1,43 +1,51 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>classroom-add</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Classroom Edit</h2>
+    <h2>إضافة فصل دراسي أو مجموعة </h2>
     <div>
         <ion-item>
-          <ion-label>Classroom Name:</ion-label>
-          <ion-input [(ngModel)]="classroomData.classroomName" placeholder="Classroom Name"></ion-input>
+          <ion-label> اسم الفصل/المجموعة </ion-label>
+          <ion-input [(ngModel)]="classroomData.classroomName" placeholder=" أدخل اسم الفصل أو المجموعة"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label> فصل أو مجموعة مغلقة</ion-label>
+          <ion-checkbox disabled=true [(ngModel)]="classroomData.private"></ion-checkbox> 
         </ion-item>
         <ion-item>
-          <ion-label>Private Classroom:</ion-label>
-          <ion-checkbox  [(ngModel)]="classroomData.private"></ion-checkbox> 
+          <ion-label>
+            لن يتمكن الطلاب من التسجيل إلا بعد موافقتك
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>تفعيل </ion-label>
+          <ion-checkbox disabled=true [(ngModel)]="classroomData.active"></ion-checkbox> 
         </ion-item>
         <ion-item>
-          <ion-label>Active: </ion-label>
-          <ion-checkbox [(ngModel)]="classroomData.active"></ion-checkbox> 
+          <ion-label>
+            الفصول أو المجموعات غير المفعلة لا تظهر للطلاب
+          </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>School Name:</ion-label>
-          <ion-input [(ngModel)]="classroomData.schoolName"></ion-input> 
+          <ion-label>اسم المدرسة أو مركز التدريس</ion-label>
+          <ion-input [(ngModel)]="classroomData.schoolName" placeholder="ادخل اسم المدرسة أو الجامعة أو المعهد"></ion-input> 
         </ion-item>
         <ion-item>
-          <ion-label>Category :</ion-label>
-          <ion-input [(ngModel)]="classroomData.category"></ion-input> 
-        </ion-item>
-        <ion-item>
-          <ion-label>Start Date:</ion-label>
+          <ion-label>تاريخ بداية الدراسة</ion-label>
           <ion-datetime [(ngModel)]="classroomData.startDate"></ion-datetime> 
         </ion-item>
         <ion-item>
-          <ion-label>End Date:</ion-label>
+          <ion-label>تاريخ نهاية الدراسة</ion-label>
           <ion-datetime [(ngModel)]="classroomData.endDate"></ion-datetime> 
         </ion-item>
         
     </div>
-    <ion-button (click)="addClassroom()">Save</ion-button>
+    <ion-button (click)="addClassroom()">حفظ</ion-button>
+    <ion-button (click)="cancel()">تراجع</ion-button>
+
   </div>
 </ion-content>

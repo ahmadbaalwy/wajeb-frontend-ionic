@@ -1,17 +1,17 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>course-add</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Course Add</h2>
+    <h2>بيانات المادة الجديدة</h2>
     <div>
-      <label>Course Name:
-        <input [(ngModel)]="courseData.courseName" placeholder="Course Name"/>
+      <label>اسم المادة:
+        <input [(ngModel)]="courseData.courseName" placeholder="ادخل اسم المادة"/>
       </label><br>
     </div>
-    <ion-button (click)="addCourse()">Save</ion-button>
+    <ion-button (click)="addCourse()">حفظ</ion-button>
   </div>
 </ion-content>

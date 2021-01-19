@@ -1,17 +1,18 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>course-delete</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Course Delete</h2>
+    <h2>حذف مادة</h2>
     <div>
       <h3>
-        Are you sure want to delete this course: {{courseData.courseName}} ?
+        هل أنت متأكد من حذف المادة الدراسية التالية: {{courseData.courseName}} ؟
       </h3>
     </div>
-    <ion-button (click)="deleteCourse()">Delete</ion-button>
+    <ion-button (click)="deleteCourse()">حذف</ion-button>
+    <ion-button (click)="cancelDelete()">تراجع</ion-button>
   </div>
 </ion-content>

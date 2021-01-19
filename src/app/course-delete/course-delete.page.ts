@@ -48,4 +48,8 @@ export class CourseDeletePage implements OnInit {
     );
   }
 
+  cancelDelete(): void{
+    this.router.navigate(["/home"]);
+  }
+
 }

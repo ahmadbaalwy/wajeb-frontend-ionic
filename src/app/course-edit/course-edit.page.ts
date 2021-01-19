@@ -49,6 +49,10 @@ export class CourseEditPage implements OnInit {
      );
   }
 
+  cancelEdit(): void{
+    this.router.navigate(["/home"]);
+  }
+
 
 
 }

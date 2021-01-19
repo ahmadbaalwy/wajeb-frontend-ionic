@@ -1,14 +1,14 @@
-<ion-header>
+<ion-header dir="rtl"> 
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-input [(ngModel)]="credentials.email" placeholder="Username"></ion-input>
-  <ion-input [(ngModel)]="credentials.password" placeholder="Password" type="password"></ion-input>
-  <ion-button expand="block" (click)="loginUser(credentials)">login</ion-button>
-  <ion-button expand="block" (click)="signupUser(credentials)">Register</ion-button>
+<ion-content dir="rtl">
+  <ion-input [(ngModel)]="credentials.email" placeholder="البريد الإلكتروني"></ion-input>
+  <ion-input [(ngModel)]="credentials.password" placeholder="كلمة السر" type="password"></ion-input>
+  <ion-button expand="block" (click)="loginUser(credentials)">تسجيل الدخول</ion-button>
+  <ion-button expand="block" (click)="signupUser(credentials)">حساب جديد</ion-button>
 
 
 </ion-content>
