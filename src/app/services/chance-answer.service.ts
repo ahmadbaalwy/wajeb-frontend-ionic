@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/chanceAnswers/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/chanceAnswers/';
 const headers = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

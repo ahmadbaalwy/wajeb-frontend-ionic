@@ -15,6 +15,8 @@ export class QuizzAddPage implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(
+      params => this.quizzData.classroomId = (params['classroomId']));
   }
 
   addQuizz(){
@@ -28,6 +30,10 @@ export class QuizzAddPage implements OnInit {
         console.log(err);
       }
      );
+  }
+
+  cancel(){
+    this.router.navigate(['/classroom-teacher-main'], {queryParams: {classroomId: this.quizzData.classroomId} });
   }
 
 }

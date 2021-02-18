@@ -10,7 +10,7 @@ export class QuizzAnswer{
   questionId: number;
 }
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/quizzAnswers/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/quizzAnswers/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

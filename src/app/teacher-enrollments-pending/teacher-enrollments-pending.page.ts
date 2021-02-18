@@ -9,7 +9,7 @@ import { Enrollment, enrollmentDetails, EnrollmentService } from '../services/en
 })
 export class TeacherEnrollmentsPendingPage implements OnInit {
   classroomId: any;
-  enrollments: enrollmentDetails;
+  enrollments: enrollmentDetails[] = [];
   constructor(private enrollmentService: EnrollmentService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -39,6 +39,10 @@ export class TeacherEnrollmentsPendingPage implements OnInit {
       err => {
       }
     );
+  }
+
+  backToClassroomPage(){
+    this.router.navigate(['/classroom-teacher-main'], {queryParams: {classroomId: this.classroomId} });
   }
 
 }

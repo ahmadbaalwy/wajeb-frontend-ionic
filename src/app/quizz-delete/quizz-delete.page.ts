@@ -51,6 +51,10 @@ export class QuizzDeletePage implements OnInit {
     );
   }
 
+  backToQuizzPage(){
+    this.router.navigate(['/quizz-teacher-main'],  {queryParams: {quizzId: this.quizzId} });
+  }  
+
 }
 
 

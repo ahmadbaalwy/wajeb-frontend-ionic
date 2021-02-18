@@ -111,6 +111,10 @@ const routes: Routes = [
     path: 'student-chances-continue',
     loadChildren: () => import('./student-chances-continue/student-chances-continue.module').then( m => m.StudentChancesContinuePageModule)
   },
+  {
+    path: 'question-teacher',
+    loadChildren: () => import('./question-teacher/question-teacher.module').then( m => m.QuestionTeacherPageModule)
+  },
   
 ];
 

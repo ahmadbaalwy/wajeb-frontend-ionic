@@ -1,8 +1,9 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" dir="rtl">
   <ion-toolbar>
-    <ion-title dir="rtl">
+    <ion-title slot="start">
       واجب موبايل
     </ion-title>
+    <ion-button slot="end" (click)="signOut();">خروج</ion-button>
   </ion-toolbar>
 </ion-header>
 

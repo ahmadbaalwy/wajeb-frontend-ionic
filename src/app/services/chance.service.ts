@@ -13,7 +13,7 @@ export class Chance{
   grade_date: ISODateString;
 
 }
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/chances/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/chances/';
 const headers = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

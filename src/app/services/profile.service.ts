@@ -9,7 +9,7 @@ export class Profile{
   role: string;
 }
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/profiles/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/profiles/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

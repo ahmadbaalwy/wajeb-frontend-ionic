@@ -13,7 +13,7 @@ export class Quizz{
   questions: Question[];
 }
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/quizzes/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/quizzes/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

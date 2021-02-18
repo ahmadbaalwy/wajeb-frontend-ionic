@@ -63,6 +63,17 @@ addClassroom(courseId): void{
   this.router.navigate(['classroom-add'], {queryParams: {courseId: courseId} } )
 }
 
+signOut(){
+  this.authService.logoutUser().then(
+    () => {
+           this.router.navigate(['/']);
+          }
+        ,
+        err => {
+          console.log(err);
+        }
+       ); 
+    }
 
 }
 

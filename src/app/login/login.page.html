@@ -1,10 +1,16 @@
 <ion-header dir="rtl"> 
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
+  <ion-item>
+    <ion-label>
+      تسجيل الدخول
+    </ion-label>
+
+  </ion-item>
   <ion-input [(ngModel)]="credentials.email" placeholder="البريد الإلكتروني"></ion-input>
   <ion-input [(ngModel)]="credentials.password" placeholder="كلمة السر" type="password"></ion-input>
   <ion-button expand="block" (click)="loginUser(credentials)">تسجيل الدخول</ion-button>

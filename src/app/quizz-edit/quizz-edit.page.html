@@ -1,31 +1,36 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>Quizz-Edit</ion-title>
+    <ion-title slot="start">واجب موبايل</ion-title>
+    <ion-buttons slot="end">
+      <ion-label>رجوع</ion-label>
+      <ion-icon (click)="backToQuizzPage(quizz.id);" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Quizz Edit</h2>
+    <h2>تعديل بيانات الواجب</h2>
     <div>
         <ion-item>
-          <ion-label>Quizz Name:</ion-label>
+          <ion-label>اسم الواجب:</ion-label>
           <ion-input [(ngModel)]="quizzData.quizzName" placeholder="Quizz Name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label>Active: </ion-label>
+          <ion-label>تفعيل: </ion-label>
           <ion-checkbox [(ngModel)]="quizzData.active"></ion-checkbox> 
         </ion-item>
         <ion-item>
-          <ion-label text-wrap>Max number of allowed attempts:</ion-label>
+          <ion-label text-wrap>عدد المحاولات المسموحة:</ion-label>
           <ion-input [(ngModel)]="quizzData.maxChances"></ion-input> 
         </ion-item>
         <ion-item>
-          <ion-label>Grades: </ion-label>
+          <ion-label>درجة الواجب: </ion-label>
           <ion-input [(ngModel)]="quizzData.grade"></ion-input> 
         </ion-item>
         
     </div>
-    <ion-button (click)="editQuizz()">Save</ion-button>
+    <ion-button (click)="editQuizz()">حفظ</ion-button>
+    <ion-button (click)="backToQuizzPage()">تراجع</ion-button>
   </div>
 </ion-content>

@@ -28,7 +28,6 @@ export class LoginPage implements OnInit {
       () => {
         this.profileService.getRole(this.credentials.email).subscribe(
           data => {
-            alert(data);
             if(data=="teacher"){
               this.router.navigate(['/home']);
             }

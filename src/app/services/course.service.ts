@@ -24,7 +24,7 @@ export interface Classroom {
 
 
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/courses/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/courses/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -42,9 +42,9 @@ export class CourseService {
   getCourses(token: any): Observable<any>{
     let params = new HttpParams().set("token",token);
 
-    let headers = new HttpHeaders().append('responseType', 'text');
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
     
-    return this.http.get<Course>(API_URL + 'myCourses', {params: params,});
+    return this.http.get<Course>(API_URL + 'myCourses', {headers: headers, params: params});
   }
 
   addCourse(course: any): Observable<any>{

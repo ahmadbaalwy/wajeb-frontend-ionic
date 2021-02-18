@@ -9,7 +9,7 @@ import { enrollmentDetails, EnrollmentService } from '../services/enrollment.ser
 })
 export class TeacherEnrollmentsApprovedPage implements OnInit {
   classroomId: any;
-  enrollments: enrollmentDetails;
+  enrollments: enrollmentDetails[] = [];
   constructor(private enrollmentService: EnrollmentService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -20,12 +20,16 @@ export class TeacherEnrollmentsApprovedPage implements OnInit {
       params => this.classroomId = (params['classroomId']));
     this.enrollmentService.getApprovedEnrollments(this.classroomId).subscribe(
       data => {
-        this.enrollments = data;
+        this.enrollments = data; 
         console.log(this.enrollments);
       },
       err => {
       }
     );
+  }
+
+  backToClassroomPage(){
+    this.router.navigate(['/classroom-teacher-main'], {queryParams: {classroomId: this.classroomId} });
   }
 
 }

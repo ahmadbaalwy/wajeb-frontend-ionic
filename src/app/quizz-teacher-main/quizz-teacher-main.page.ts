@@ -19,6 +19,25 @@ export class QuizzTeacherMainPage implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService, public actionSheetController: ActionSheetController) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(
+      params => this.quizzId = (params['quizzId']));
+    this.quizzService.editQuizzGet(this.quizzId).subscribe(
+        data => {
+          this.quizz=data;
+          this.quizzService.getClassroomId(this.quizzId).subscribe(
+            data => {
+              this.classroomId=data;
+          },
+          err => {
+            console.log(err);
+          }
+          );
+      },
+      err => {
+        console.log(err);
+      }
+      );
+    
   }
 
   backToClassroomHome(quizzId: any){
@@ -33,23 +52,21 @@ export class QuizzTeacherMainPage implements OnInit {
       params => this.quizzId = (params['quizzId']));
     this.quizzService.editQuizzGet(this.quizzId).subscribe(
         data => {
+          console.log(data);
           this.quizz=data;
-          this.questions = data.questions;
+          this.quizzService.getClassroomId(this.quizzId).subscribe(
+            data => {
+              this.classroomId=data;
+          },
+          err => {
+            console.log(err);
+          }
+          );
       },
       err => {
         console.log(err);
       }
       );
-
-      this.quizzService.getClassroomId(this.quizzId).subscribe(
-        data => {
-          this.classroomId=data;
-      },
-      err => {
-        console.log(err);
-      }
-      );
-    
   }
 
   editQuizz(quizzId){
@@ -91,6 +108,11 @@ export class QuizzTeacherMainPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  viewQuestion(questionId){
+    this.router.navigate(['/question-teacher'], {queryParams: {questionId: questionId} });
+
   }
 
 }
