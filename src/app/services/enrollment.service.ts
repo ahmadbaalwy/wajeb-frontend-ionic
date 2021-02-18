@@ -21,7 +21,7 @@ export class enrollmentDetails {
   full_name: string;
 }
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/enrollments/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/enrollments/';
 const headers = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -48,15 +48,15 @@ export class EnrollmentService {
   }
 
   //get pending enrollments for a specific classroom
-  getPendingEnrollments(classroomId){
+  getPendingEnrollments(classroomId): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
-    return this.http.get<enrollmentDetails>(API_URL + 'getPendingEnrollments', {responseType: 'json', params: {classroomId: classroomId}});
+    return this.http.get(API_URL + 'getPendingEnrollments', {responseType: 'json', params: {classroomId: classroomId}});
   }
 
   //get approved enrollments for a specific classroom
-  getApprovedEnrollments(classroomId){
+  getApprovedEnrollments(classroomId): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
-    return this.http.get<enrollmentDetails>(API_URL + 'getApprovedEnrollments', {responseType: 'json', params: {classroomId: classroomId}});
+    return this.http.get(API_URL + 'getApprovedEnrollments', {responseType: 'json', params: {classroomId: classroomId}});
   }
 
   approvePendingEnrollment(enrollmentId){

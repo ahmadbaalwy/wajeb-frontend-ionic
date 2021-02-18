@@ -41,4 +41,8 @@ export class CourseAddPage implements OnInit {
      
   }
 
+  cancel(){
+    this.router.navigate(['/home']);
+  }
+
 }

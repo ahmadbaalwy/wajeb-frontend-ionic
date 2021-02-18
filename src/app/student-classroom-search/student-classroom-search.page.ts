@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { classroomSearch, ClassroomService } from '../services/classroom.service';
 import { EnrollmentService } from '../services/enrollment.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-student-classroom-search',
@@ -12,21 +13,40 @@ import { EnrollmentService } from '../services/enrollment.service';
 export class StudentClassroomSearchPage implements OnInit {
   @Input() classroomSearchData = {courseName:'', schoolName:''};
   classrooms: classroomSearch[] = [];
+  username: any;
   enrollmentData = {status:'pending', requestDate: Date.now(), username:'', classroom_id:''}
-  constructor(private classroomService: ClassroomService, private enrollmentService: EnrollmentService, private router: Router) { }
+  constructor(private classroomService: ClassroomService, private enrollmentService: EnrollmentService, 
+    private router: Router,
+    public loadingController: LoadingController
+    ) { }
 
   ngOnInit() {
   }
 
-  searchForClassroom(){
-    this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName).subscribe(
-      data => {
-        this.classrooms = data;
-      },
-      err => {
-        console.log(err);
+  async searchForClassroom(){
+    const loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      duration: 10000
+    });
+    await loading.present();
+
+    firebase.auth().onAuthStateChanged( user => {
+      if (user) {
+        this.username = user.email;
+        this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username).subscribe(
+          data => {
+            this.classrooms = data;
+            console.log(this.classrooms);
+            loading.dismiss();
+          },
+          err => {
+            console.log(err);
+          }
+         );
       }
-     );
+    });
+    
   }
 
   addEnrollment(classroomId){
@@ -45,6 +65,10 @@ export class StudentClassroomSearchPage implements OnInit {
         );
       } 
     });
+  }
+
+  backToStudentHome(){
+    this.router.navigate(['/student-home']);
   }
 
 }

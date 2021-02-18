@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Question-add</ion-title>
+    <ion-title>واجب موبايل</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,6 +12,21 @@
           <ion-label>نص السؤال</ion-label>
           <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
         </ion-item>
+        <ion-item>
+
+          <ion-fab-button (click)="addQuestionPhoto()">
+            <ion-icon name="camera"></ion-icon>
+          </ion-fab-button>
+        </ion-item>
+      
+        <ion-grid>
+          <ion-row>
+          <ion-col size="6">
+              <ion-img [src]="photoService.photo.webviewPath"></ion-img>
+          </ion-col>
+          </ion-row>
+        </ion-grid>
+
         <ion-item>
           <ion-label>درجة السؤال </ion-label>
           <ion-input [(ngModel)]="questionData.score" placeholder="أدخل درجة السؤال"></ion-input> 
@@ -60,6 +75,8 @@
         
         
     </div>
-    <ion-button (click)="addQuestionSelect()">Save</ion-button>
+    <ion-button (click)="addQuestionSelect()">حفظ</ion-button>
+    <ion-button (click)="cancel()">تراجع</ion-button>
+
   </div>
 </ion-content>

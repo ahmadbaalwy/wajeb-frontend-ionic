@@ -1,16 +1,24 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>Quizz-delete</ion-title>
+    <ion-title slot="start">واجب موبايل</ion-title>
+    <ion-buttons slot="end">
+      <ion-label>رجوع</ion-label>
+      <ion-icon (click)="backToQuizzPage(quizz.id);" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <ion-item>
-    Are you sure want to delete the below quizz with all its data ? <br><br> Quizz Name: {{quizz.quizzName}} 
-    <br><br> Note: this action can NOT be undone
+    <ion-label>
+      هل أنت متأكد من حذف هذا الواجب ؟
+
+    </ion-label>
   </ion-item>
   <br>
   <ion-item>
-    <ion-button (click)="deleteQuizz()">Delete</ion-button>
+    <ion-button (click)="deleteQuizz()">حذف</ion-button>
+    <ion-button (click)="backToQuizzPage()">تراجع</ion-button>
+
   </ion-item>
 </ion-content>

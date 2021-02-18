@@ -1,13 +1,23 @@
 <ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>الفصول التي قمت بالتسجيل فيها</ion-title>
+    <ion-title slot="start">
+      واجب موبايل
+    </ion-title>
+    <ion-button slot="end" (click)="signOut();">خروج</ion-button>
   </ion-toolbar>
+  
   <ion-item>
-    <ion-button size="mid" (click)="goToClassroomSearch();">بحث عن فصل دراسي</ion-button>
+    
   </ion-item>
 </ion-header>
 
 <ion-content dir="rtl">
+  <div>
+    <h2>
+      أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. ستجد هنا الفصول الدراسية التي سجلت فيها 
+    </h2>
+    <ion-button size="mid" (click)="goToClassroomSearch();">بحث عن فصل دراسي</ion-button>
+  </div>
   <div *ngFor="let enrollment of enrollments;">
     <ion-card>
       <ion-card-content>

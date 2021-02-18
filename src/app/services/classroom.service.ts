@@ -31,7 +31,7 @@ export class classroomSearch {
 
 
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/classrooms/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/classrooms/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -68,9 +68,9 @@ export class ClassroomService {
     return this.http.delete(API_URL + 'deleteClassroom', {headers: headers, params: {classroomId: classroomId}});
   }
 
-  searchForClassroom(courseName: any, schoolName: any): Observable<any>{
+  searchForClassroom(courseName: any, schoolName: any, username: any): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
-    return this.http.get<classroomSearch>(API_URL + 'searchForClassroom', {responseType: 'json', headers: headers, params: {courseName: courseName, schoolName: schoolName}});
+    return this.http.get<classroomSearch>(API_URL + 'searchForClassroom', {responseType: 'json', headers: headers, params: {courseName: courseName, schoolName: schoolName, username: username}});
 
   }
 

@@ -14,14 +14,13 @@ export class ClassroomStudentMainPage implements OnInit {
   classroom: Classroom[] = [];
   quizzes: Quizz[] = [];
   classroomName: any;
-  constructor(private router: Router, private route:ActivatedRoute, private menu: MenuController, private classroomService: ClassroomService ) { }
+  constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService ) { }
 
   ngOnInit() {
   }
 
   ionViewDidEnter(){
     
-    this.menu.close();
      this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
     this.classroomService.editClassroomGet(this.classroomId).subscribe(
@@ -42,7 +41,6 @@ export class ClassroomStudentMainPage implements OnInit {
   }
 
   goHome(){
-    this.menu.close();
       this.router.navigate(['/student-home']);
   }
 

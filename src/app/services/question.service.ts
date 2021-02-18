@@ -13,7 +13,7 @@ export class Question{
   quizzAnswers: QuizzAnswer[]=[];
 }
 
-const API_URL = 'http://wajeb-backend.azurewebsites.net/api/questions/';
+const API_URL = 'http://wajeb-project.el.r.appspot.com/api/questions/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -26,10 +26,27 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
 
   addQuestion(questionData): Observable<any>{
-    let headers = new HttpHeaders().append('Content-Type', 'application/json');
+    //let headers = new HttpHeaders();
+    //headers.append('Accept', 'application/json');
+    //headers.append('Accept', 'multipart/form-data');
+
     return this.http.post(API_URL + "addQuestion", 
     questionData,
-    {headers: headers});
+    { observe: 'response' });
+  }
+
+  getQuestion(questionId): Observable<any>{
+    return this.http.get<Question>(API_URL + 'editQuestion', {responseType: 'json', params: {questionId: questionId}});
+  }
+
+  getQuizzId(questionId: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get(API_URL + 'getQuizzId', {responseType: 'json', headers: headers, params: {questionId: questionId}});
+  }
+
+  getQuestionPhoto(questionId): Observable<any>{
+    return this.http.get(API_URL + 'getQuestionPhoto', {responseType: 'json', params: {questionId: questionId}});
+
   }
 
 }

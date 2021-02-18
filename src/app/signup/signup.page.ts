@@ -48,5 +48,10 @@ export class SignupPage implements OnInit {
     );
   }
 
+  cancel(){
+    this.router.navigate(['/']);
+
+  }
+
 
 }

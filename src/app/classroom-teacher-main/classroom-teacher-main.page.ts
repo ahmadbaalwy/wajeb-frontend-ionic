@@ -19,7 +19,7 @@ export class ClassroomTeacherMainPage implements OnInit {
   enrollments: Enrollment[]=[];
   classroomName: any;
   approvedRequests: number = 0;
-  pendingRequests: number;
+  pendingRequests: number = 0;
   constructor(private router: Router, private route:ActivatedRoute, private menu: MenuController, private classroomService: ClassroomService ) { }
 
   ngOnInit(){
@@ -41,10 +41,10 @@ export class ClassroomTeacherMainPage implements OnInit {
           this.enrollments = data.enrollments;
           this.enrollments.forEach(element => {
             if(element.status=='pending'){
-              this.pendingRequests =+1;
+              this.pendingRequests = this.pendingRequests + 1;
             }
             if(element.status=='approved'){
-              this.approvedRequests =+1;
+              this.approvedRequests = this.approvedRequests + 1;
             }
           });
       },

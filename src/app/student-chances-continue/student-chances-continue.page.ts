@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Chance, ChanceService } from '../services/chance.service';
 import { ChanceAnswerService } from '../services/chance-answer.service';
 import { Quizz, QuizzService } from '../services/quizz.service';
-import { Question } from '../services/question.service';
+import { Question, QuestionService } from '../services/question.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 class questionData{
   seq: number;
@@ -48,6 +50,7 @@ export class StudentChancesContinuePage implements OnInit {
   currentQuestionText: any;
   currentQuestionId: any;
   answersList: chanceAnswerData[]=[];
+  questionPhoto: any;
   @Input() chanceAnswerData1 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
   @Input() chanceAnswerData2 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
   @Input() chanceAnswerData3 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
@@ -56,9 +59,17 @@ export class StudentChancesContinuePage implements OnInit {
   constructor(private chanceService: ChanceService, private ChanceAnswerService: ChanceAnswerService,
     private route: ActivatedRoute,
     private router: Router,
-    private quizzService: QuizzService) { }
+    private quizzService: QuizzService,
+    private questionService: QuestionService,
+    private domSanitizer: DomSanitizer,
+    private photoViewer: PhotoViewer) { }
 
   ngOnInit() {
+    
+  }
+  
+
+  ionViewDidEnter(){
     this.route.queryParams.subscribe(
       params => this.chanceId = (params['chanceId']));
       this.chanceService.getQuizzId(this.chanceId).subscribe(
@@ -73,6 +84,25 @@ export class StudentChancesContinuePage implements OnInit {
                 this.questionsList.push(new questionData(index+1,element.id,element.text));
               });
               console.log(this.questionsList);
+              this.currentQuestionId = this.questionsList[this.currentQuestionSeq].questionId;
+              this.currentQuestionText = this.questionsList[this.currentQuestionSeq].questionText;
+              this.ChanceAnswerService.getChanceAnswerData(this.chanceId, this.currentQuestionId).subscribe(
+                data => {
+                  this.answersList = data;
+                  console.log(this.answersList);
+                  this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+                    data => {
+                      this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
+                    },
+                    err => {
+                      console.log(err);
+                    }
+                  )
+
+                },
+                err => {
+                }
+              );
             },
             err => {
             }
@@ -81,21 +111,8 @@ export class StudentChancesContinuePage implements OnInit {
         err => {
         }
       );
-  }
-  
 
-  ionViewDidEnter(){
-    this.currentQuestionId = this.questionsList[this.currentQuestionSeq].questionId;
-    this.currentQuestionText = this.questionsList[this.currentQuestionSeq].questionText;
-    this.ChanceAnswerService.getChanceAnswerData(this.chanceId, this.currentQuestionId).subscribe(
-      data => {
-        this.answersList = data;
-        console.log(this.answersList);
-
-      },
-      err => {
-      }
-    );
+    
 
   }
 
@@ -117,7 +134,14 @@ export class StudentChancesContinuePage implements OnInit {
       data => {
         this.answersList = data;
         console.log(this.answersList);
-
+        this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+          data => {
+            this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
+          },
+          err => {
+            console.log(err);
+          }
+        )
       },
       err => {
       }
@@ -141,7 +165,14 @@ export class StudentChancesContinuePage implements OnInit {
       data => {
         this.answersList = data;
         console.log(this.answersList);
-
+        this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+          data => {
+            this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
+          },
+          err => {
+            console.log(err);
+          }
+        )
       },
       err => {
       }
@@ -171,7 +202,9 @@ export class StudentChancesContinuePage implements OnInit {
     
   }
 
-
-    
+  openPhoto(){
+    this.photoViewer.show(this.questionPhoto);
+  }
 
 }
+

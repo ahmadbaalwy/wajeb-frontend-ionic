@@ -1,18 +1,21 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-title slot="start">واجب موبايل</ion-title>
+    <ion-buttons slot="end">
+      <ion-label>رجوع</ion-label>
       <ion-icon (click)="backToClassroomHome(quizz.id);" name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>العودة إلى صفحة الفصل</ion-title>
   </ion-toolbar>
-  <ion-title>quizz-teacher-main</ion-title>
 </ion-header>
 
 <ion-header dir="rtl">
+  <ion-item>
+    <ion-label>صفحة الواجب</ion-label>
+  </ion-item>
   <ion-grid>
     <ion-row>
       <ion-col>
-        {{quizz.quizzName}}
+        اسم الواجب: {{quizz.quizzName}}
       </ion-col>
       <ion-col *ngIf="quizz.active">
         هذا الواجب مفعل
@@ -28,10 +31,10 @@
     </ion-row>  
   </ion-grid>
   <ion-item>
-    <ion-button (click)="editQuizz(quizz.id);">Edit this quizz</ion-button>
-    <ion-button (click)="deleteQuizz(quizz.id);">Delete this quizz</ion-button>
+    <ion-button (click)="editQuizz(quizz.id);">تعديل هذا الواجب</ion-button>
+    <ion-button (click)="deleteQuizz(quizz.id);">حذف هذا الواجب</ion-button>
   </ion-item>
-  <ion-item dir="rtl">
+  <ion-item >
     <ion-button size="mid" (click)="presentActionSheet(quizz.id);">سؤال جديد</ion-button>
   </ion-item>
 </ion-header>
@@ -41,14 +44,7 @@
       <ion-item dir="rtl">
         <br> السؤال رقم {{i+1}}: <br><br>
         {{question.text}}
+        <ion-icon (click) = "viewQuestion(question.id);" slot="end" name="arrow-back-outline"></ion-icon>
       </ion-item>
-      <div *ngFor="let quizzAnswer of question.quizzAnswers">
-        <ion-item dir="rtl" class="ion-padding-start">
-          {{quizzAnswer.text}}
-          <ion-item>
-            <ion-checkbox disabled=true [(ngModel)]="quizzAnswer.correct"></ion-checkbox>
-          </ion-item>
-        </ion-item>
-      </div>
     </div>
 </ion-content>
