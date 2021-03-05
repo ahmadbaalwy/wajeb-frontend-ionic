@@ -1,20 +1,59 @@
 <ion-header dir="rtl"> 
   <ion-toolbar>
-    <ion-title>واجب موبايل</ion-title>
+    <ion-title>واجب </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
+  
   <ion-item>
-    <ion-label>
-      تسجيل الدخول
+    <ion-label class="ion-text-wrap">
+      <H1>
+        اختر طريقة تسجيل الدخول إلى تطبيق "واجب"
+      </H1>
     </ion-label>
-
   </ion-item>
-  <ion-input [(ngModel)]="credentials.email" placeholder="البريد الإلكتروني"></ion-input>
-  <ion-input [(ngModel)]="credentials.password" placeholder="كلمة السر" type="password"></ion-input>
-  <ion-button expand="block" (click)="loginUser(credentials)">تسجيل الدخول</ion-button>
-  <ion-button expand="block" (click)="signupUser(credentials)">حساب جديد</ion-button>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col width-50>
+        <ion-card (click)="loginWithPhone()" >
+            <p style="text-align:center; font-size:160%;" >
+              تسجيل الدخول  <br> باستخدام الموبايل <br> <br>
+              <ion-icon size="large" name="call-outline"></ion-icon>
+            </p>       
+        </ion-card>
+      </ion-col>
+      <ion-col width-50>
+        <ion-card (click)="loginWithGoogle()" >
+          <p style="text-align:center; font-size:160%;" >
+            تسجيل الدخول  <br> باستخدام Google <br> <br>
+            <ion-icon size="large" name="logo-google"></ion-icon>
+          </p>       
+      </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col width-50>
+        <ion-card (click)="loginWithEmail()" >
+            <p style="text-align:center; font-size:160%;" >
+              تسجيل الدخول  <br> باستخدام إيميل   <br> <br>
+              <ion-icon size="large" name="at-outline"></ion-icon>
+            </p>       
+        </ion-card>
+      </ion-col>
+      <ion-col width-50>
+        <ion-card >
+            
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
+
+<ion-footer dir="rtl"> 
+  <ion-toolbar>
+    <ion-title>ahmadbaalwy@gmail.com</ion-title>
+  </ion-toolbar>
+</ion-footer>

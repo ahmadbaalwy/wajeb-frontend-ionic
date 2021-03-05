@@ -4,6 +4,7 @@ import firebase from 'firebase';
 import { classroomSearch, ClassroomService } from '../services/classroom.service';
 import { EnrollmentService } from '../services/enrollment.service';
 import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-student-classroom-search',
@@ -11,6 +12,7 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./student-classroom-search.page.scss'],
 })
 export class StudentClassroomSearchPage implements OnInit {
+  loading: any;
   @Input() classroomSearchData = {courseName:'', schoolName:''};
   classrooms: classroomSearch[] = [];
   username: any;
@@ -24,21 +26,21 @@ export class StudentClassroomSearchPage implements OnInit {
   }
 
   async searchForClassroom(){
-    const loading = await this.loadingController.create({
+    this.loading = await this.loadingController.create({
       cssClass: 'loading-class',
       message: 'الرجاء الانتظار...',
-      duration: 10000
     });
-    await loading.present();
+    await this.loading.present();
 
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
         this.username = user.email;
-        this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username).subscribe(
+        this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.classrooms = data;
             console.log(this.classrooms);
-            loading.dismiss();
           },
           err => {
             console.log(err);
@@ -49,13 +51,28 @@ export class StudentClassroomSearchPage implements OnInit {
     
   }
 
-  addEnrollment(classroomId){
+  async addEnrollment(classroomId){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+    
     firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
       if (user) {
-        this.enrollmentData.username = user.email;
+        if (user.email){
+          this.enrollmentData.username = user.email;
+        }
+        if (!user.email){
+          this.enrollmentData.username = user.phoneNumber;
+        }
+        
         this.enrollmentData.classroom_id = classroomId;
         //this.enrollmentData.requestDate = Date.now();
-        this.enrollmentService.addEnrollment(this.enrollmentData).subscribe(
+        this.enrollmentService.addEnrollment(this.enrollmentData)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             console.log(data);
             this.router.navigate(['/student-home']);

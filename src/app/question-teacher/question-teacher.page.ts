@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Question, QuestionService } from '../services/question.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-teacher',
@@ -10,6 +12,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
   styleUrls: ['./question-teacher.page.scss'],
 })
 export class QuestionTeacherPage implements OnInit {
+  loading: any;
   questionId: any;
   quizzId: any;
   question: Question[]=[];
@@ -17,20 +20,31 @@ export class QuestionTeacherPage implements OnInit {
   constructor(private route: ActivatedRoute, private questionService: QuestionService,
     private router: Router,
     private domSanitizer: DomSanitizer,
-    private photoViewer: PhotoViewer
+    private photoViewer: PhotoViewer,
+    private loadingController: LoadingController
     ) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
+
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.questionId = (params['questionId']));
 
     this.questionService.getQuestion(this.questionId).subscribe(
       data => {
         this.question = data;
-        this.questionService.getQuestionPhoto(this.questionId).subscribe(
+        this.questionService.getQuestionPhoto(this.questionId)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
             console.log(this.questionPhoto);

@@ -1,0 +1,81 @@
+<ion-header dir="rtl">
+  <ion-toolbar>
+    <ion-title>واجب </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <div>
+    <h2>إضافة مجموعة   </h2>
+    <div>
+        
+        <ion-item>
+          <ion-label>المستوى</ion-label>
+          <ion-select [(ngModel)]="classroomData.classroomName" placeholder="اختر المستوى">
+            <ion-select-option value="مستوى أول">
+              مستوى أول
+            </ion-select-option>
+            <ion-select-option value="مستوى ثاني">
+              مستوى ثاني
+            </ion-select-option>
+            <ion-select-option value="مستوى ثالث">
+              مستوى ثالث
+            </ion-select-option>
+            <ion-select-option value=" مستوى رابع">
+               مستوى رابع
+            </ion-select-option>
+            <ion-select-option value=" مستوى خامس">
+               مستوى خامس
+            </ion-select-option>
+            
+          </ion-select>
+        </ion-item>
+        <ion-item hidden=true lines="none">
+          <ion-label> فصل  مغلق</ion-label>
+          <ion-checkbox disabled=true [(ngModel)]="classroomData.private"></ion-checkbox> 
+        </ion-item>
+        <ion-item hidden=true>
+          <ion-label>
+            لن يتمكن الطلاب من التسجيل إلا بعد موافقتك
+          </ion-label>
+        </ion-item>
+        <ion-item hidden=true lines="none">
+          <ion-label>تفعيل </ion-label>
+          <ion-checkbox disabled=true [(ngModel)]="classroomData.active"></ion-checkbox> 
+        </ion-item>
+        <ion-item hidden=true>
+          <ion-label>
+            الفصول  غير المفعلة لا تظهر للطلاب
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>اسم الجامعة   </ion-label>
+          <ion-input [(ngModel)]="classroomData.schoolName" placeholder="ادخل اسم الجامعة "></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>اسم الكلية   </ion-label>
+          <ion-input [(ngModel)]="classroomData.college" placeholder="ادخل اسم الكلية "></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>اسم القسم أو التخصص   </ion-label>
+          <ion-input [(ngModel)]="classroomData.department" placeholder="ادخل اسم القسم أو التخصص "></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>اسم أو رقم المجموعة   </ion-label>
+          <ion-input [(ngModel)]="classroomData.branch" placeholder="ادخل اسم أو رقم المجموعة "></ion-input> 
+        </ion-item>
+        <ion-item>
+          <ion-label>تاريخ بداية الدراسة</ion-label>
+          <ion-datetime [(ngModel)]="classroomData.startDate"></ion-datetime> 
+        </ion-item>
+        <ion-item>
+          <ion-label>تاريخ نهاية الدراسة</ion-label>
+          <ion-datetime [(ngModel)]="classroomData.endDate"></ion-datetime> 
+        </ion-item>
+        
+    </div>
+    <ion-button (click)="addClassroom()">حفظ</ion-button>
+    <ion-button (click)="cancel()">تراجع</ion-button>
+
+  </div>
+</ion-content>

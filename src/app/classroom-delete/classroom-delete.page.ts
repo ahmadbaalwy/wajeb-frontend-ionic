@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Classroom, ClassroomService } from '../services/classroom.service';
 
 @Component({
@@ -8,17 +10,27 @@ import { Classroom, ClassroomService } from '../services/classroom.service';
   styleUrls: ['./classroom-delete.page.scss'],
 })
 export class ClassroomDeletePage implements OnInit {
+  loading: any;
   classroom: Classroom[] = [];
   classroomId: any;
-  constructor(private route: ActivatedRoute, private router: Router, private classroomService: ClassroomService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private classroomService: ClassroomService,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',   
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
-    this.classroomService.editClassroomGet(this.classroomId).subscribe(
+    this.classroomService.editClassroomGet(this.classroomId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
         data => {
           this.classroom=data;
           //this.classroomData.classroomName = this.classroom.classroomName;
@@ -29,8 +41,20 @@ export class ClassroomDeletePage implements OnInit {
       );
   }
 
-  deleteClassroom(){
-    this.classroomService.deleteClassroom(this.classroomId).subscribe(
+  ionViewDidEnter(){
+    
+  }
+
+  async deleteClassroom(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',   
+    });
+    await this.loading.present();
+    
+    this.classroomService.deleteClassroom(this.classroomId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
       data => {
         this.router.navigate(['/home']);
     },
@@ -38,6 +62,10 @@ export class ClassroomDeletePage implements OnInit {
       console.log(err);
     }
     );
+  }
+
+  cancelDelete(): void{
+    this.router.navigate(['/classroom-teacher-main'],  {queryParams: {classroomId: this.classroomId} });
   }
 
 }

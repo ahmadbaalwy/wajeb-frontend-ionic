@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Quizz, QuizzService } from '../services/quizz.service';
 
 @Component({
@@ -8,19 +10,30 @@ import { Quizz, QuizzService } from '../services/quizz.service';
   styleUrls: ['./quizz-delete.page.scss'],
 })
 export class QuizzDeletePage implements OnInit {
+  loading: any;
   quizzId: any;
   quizz: Quizz[]=[];
   classroomId: any;
   
-  constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.quizzId = (params['quizzId']));
-    this.quizzService.editQuizzGet(this.quizzId).subscribe(
+    this.quizzService.editQuizzGet(this.quizzId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
         data => {
           this.quizz=data;
       },
@@ -39,8 +52,17 @@ export class QuizzDeletePage implements OnInit {
       );
   }
 
-  deleteQuizz(){
-    this.quizzService.deleteQuizz(this.quizzId).subscribe(
+  async deleteQuizz(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
+    this.quizzService.deleteQuizz(this.quizzId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
       data => {
         this.router.navigate(['/classroom-teacher-main'], {queryParams: {classroomId: this.classroomId} });
 

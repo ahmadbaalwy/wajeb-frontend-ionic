@@ -1,16 +1,17 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>classroom-delete</ion-title>
+    <ion-title>واجب </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <ion-item>
-    Are you sure want to delete the below classroom with all its data ? <br><br> Classroom Name: {{classroom.classroomName}} 
-    <br><br> Note: this action can NOT be undone
+    هل أنت متأكد من حذف هذه المجموعة أو الفصل ؟ <br><br>  اسم المجموعة أو الفصل: {{classroom.classroomName}} 
+    <br><br> ملاحظة: هذه الخطوة ستؤدي إلى حذف جميع البيانات المرتبطة بهذه المجموعة أو الفصل
   </ion-item>
   <br>
   <ion-item>
-    <ion-button (click)="deleteClassroom()">Delete</ion-button>
+    <ion-button (click)="deleteClassroom()">حذف</ion-button>
+    <ion-button (click)="cancelDelete()">تراجع</ion-button>
   </ion-item>
 </ion-content>

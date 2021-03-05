@@ -34,18 +34,19 @@
   <div *ngFor="let classroom of classrooms;">
     <ion-card>
       <ion-card-content>
-        <ion-item>
-          اسم المادة: {{classroom.course_name}}
+        <ion-item lines="none">
+          {{classroom.course_name}}
         </ion-item>
-        <ion-item>
-          اسم الفصل: {{classroom.classroom_name}}
+        <ion-item lines="none">
+          {{classroom.classroom_name}} - {{classroom.branch}} - {{classroom.college}} - {{classroom.department}} - {{classroom.school_name}}
         </ion-item>
-        <ion-item>
-          اسم المدرسة: {{classroom.school_name}}
-        </ion-item>
-        <ion-item>
+        <ion-item lines="none">
           اسم المدرس: {{classroom.full_name}}
         </ion-item>
+        <ion-item lines="none">
+          من : {{classroom.start_date}} إلى {{classroom.end_date}}
+        </ion-item>
+        
         <ion-item>
           <ion-button *ngIf="classroom.status==null" (click)="addEnrollment(classroom.classroomId);">
             طلب التسجيل

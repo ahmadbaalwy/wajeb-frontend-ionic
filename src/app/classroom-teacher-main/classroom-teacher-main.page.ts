@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Classroom, ClassroomService } from '../services/classroom.service';
 import { Enrollment } from '../services/enrollment.service';
 import { Quizz } from '../services/quizz.service';
@@ -13,6 +14,7 @@ import { Quizz } from '../services/quizz.service';
   
 
 export class ClassroomTeacherMainPage implements OnInit {
+  loading: any;
   classroomId: number;
   classroom: Classroom[] = [];
   quizzes: Quizz[] = [];
@@ -20,21 +22,34 @@ export class ClassroomTeacherMainPage implements OnInit {
   classroomName: any;
   approvedRequests: number = 0;
   pendingRequests: number = 0;
-  constructor(private router: Router, private route:ActivatedRoute, private menu: MenuController, private classroomService: ClassroomService ) { }
+  constructor(private router: Router, private route:ActivatedRoute, private menu: MenuController,
+     private classroomService: ClassroomService,
+     private loadingController: LoadingController ) { }
 
-  ngOnInit(){
+  ngOnInit(){  
+  }
+
+  async ionViewWillEnter(){
     this.menu.close();
      this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
-  }
 
-  ionViewDidEnter(){
     this.approvedRequests = 0;
     this.pendingRequests = 0;
     this.menu.close();
      this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
-    this.classroomService.editClassroomGet(this.classroomId).subscribe(
+
+      this.loading = await this.loadingController.create({
+        cssClass: 'loading-class',
+        message: 'الرجاء الانتظار...',
+        
+      });
+      await this.loading.present();
+
+    this.classroomService.editClassroomGet(this.classroomId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
         data => {
           this.classroom=data;
           this.quizzes = data.quizzes;
@@ -83,6 +98,12 @@ export class ClassroomTeacherMainPage implements OnInit {
 
   goToApprovedEnrollments(classroomId: any){
     this.router.navigate(['/teacher-enrollments-approved'], {queryParams: {classroomId: classroomId} });
+  }
+
+  backToHome(){
+    
+    this.router.navigate(['/home']);
+
   }
 
 }

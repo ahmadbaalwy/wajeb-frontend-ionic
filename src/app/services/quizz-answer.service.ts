@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API_URL } from './chance-answer.service'
+
 
 export class QuizzAnswer{
   id: number;
@@ -10,7 +12,7 @@ export class QuizzAnswer{
   questionId: number;
 }
 
-const API_URL = 'http://wajeb-project.el.r.appspot.com/api/quizzAnswers/';
+//const API_URL = 'http://wajeb-project.el.r.appspot.com/api/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -24,7 +26,7 @@ export class quizzAnswerService {
 
   addQuizzAnswer(quizzAnswerData): Observable<any>{
     let headers = new HttpHeaders().append('Content-Type', 'application/json');
-    return this.http.post(API_URL + "addQuizzAnswer", 
+    return this.http.post(API_URL + "quizzAnswers/addQuizzAnswer", 
     quizzAnswerData,
     {headers: headers});
   }

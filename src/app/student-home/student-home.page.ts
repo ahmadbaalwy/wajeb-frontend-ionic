@@ -4,6 +4,8 @@ import { LoadingController } from '@ionic/angular';
 import firebase from 'firebase';
 import { AuthService } from '../services/auth.service';
 import { enrollmentDetails, EnrollmentService } from '../services/enrollment.service';
+import { finalize } from 'rxjs/operators';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-student-home',
@@ -11,32 +13,63 @@ import { enrollmentDetails, EnrollmentService } from '../services/enrollment.ser
   styleUrls: ['./student-home.page.scss'],
 })
 export class StudentHomePage implements OnInit {
+  loading: any;
   userToken: any;
   enrollments: enrollmentDetails[]=[];
+  fullName: any;
+  errorMessage: any;
   constructor(private router: Router, private enrollmentService: EnrollmentService, private authService:AuthService,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private profileService: ProfileService
     ) { }
 
   ngOnInit() {
   }
 
-  async ionViewDidEnter(){
-    const loading = await this.loadingController.create({
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
       cssClass: 'loading-class',
       message: 'الرجاء الانتظار...',
-      duration: 10000
+      
     });
-    await loading.present();
+    await this.loading.present();
 
     firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
       if (user) {
         this.userToken = await user.getIdToken();
         console.log(this.userToken);
-        this.enrollmentService.getEnrollments(this.userToken).subscribe(
+
+        if (user.email){
+          this.profileService.getFullName(user.email)
+          .subscribe(
+            data => {
+              this.fullName = data;
+              console.log(this.fullName);
+            },
+            err => {
+              this.errorMessage = err;
+            }
+          );
+        }
+        if (user.phoneNumber){
+          this.profileService.getFullName(user.phoneNumber)
+          .subscribe(
+            data => {
+              this.fullName = data;
+              console.log(this.fullName);
+            },
+            err => {
+              this.errorMessage = err;
+            }
+          );
+        }
+
+        this.enrollmentService.getEnrollments(this.userToken)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.enrollments = data;
             console.log(this.enrollments);
-            loading.dismiss();
           },
           err => {
             //this.courses = err.error.message;
