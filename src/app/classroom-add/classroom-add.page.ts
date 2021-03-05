@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Classroom, ClassroomService } from '../services/classroom.service';
 
 @Component({
@@ -10,16 +12,27 @@ import { Classroom, ClassroomService } from '../services/classroom.service';
 export class ClassroomAddPage implements OnInit {
   @Input() classroomData = { classroomName: '', private: true, active: true, schoolName: '', category:'', startDate:'', endDate:'', courseId:0};
   classroom: Classroom;
-  constructor(private route: ActivatedRoute, private router: Router, private classroomService: ClassroomService) { }
+  loading: any;
+  constructor(private route: ActivatedRoute, private router: Router, private classroomService: ClassroomService,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
     
   }
 
-  addClassroom(){
+  async addClassroom(){
     this.route.queryParams.subscribe(
       params => this.classroomData.courseId = (params['courseId']));
-    this.classroomService.addClassroom(this.classroomData).subscribe(
+    
+      this.loading = await this.loadingController.create({
+        cssClass: 'loading-class',
+        message: 'الرجاء الانتظار...',
+      });
+      await this.loading.present();
+
+    this.classroomService.addClassroom(this.classroomData)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
       data => {
         this.router.navigate(['/home']);
       },

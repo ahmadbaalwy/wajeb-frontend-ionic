@@ -115,6 +115,38 @@ const routes: Routes = [
     path: 'question-teacher',
     loadChildren: () => import('./question-teacher/question-teacher.module').then( m => m.QuestionTeacherPageModule)
   },
+  {
+    path: 'login-phone',
+    loadChildren: () => import('./login-phone/login-phone.module').then( m => m.LoginPhonePageModule)
+  },
+  {
+    path: 'signup-phone',
+    loadChildren: () => import('./signup-phone/signup-phone.module').then( m => m.SignupPhonePageModule)
+  },
+  {
+    path: 'login-email',
+    loadChildren: () => import('./login-email/login-email.module').then( m => m.LoginEmailPageModule)
+  },
+  {
+    path: 'login-google',
+    loadChildren: () => import('./login-google/login-google.module').then( m => m.LoginGooglePageModule)
+  },
+  {
+    path: 'signup-google',
+    loadChildren: () => import('./signup-google/signup-google.module').then( m => m.SignupGooglePageModule)
+  },
+  {
+    path: 'classroom-add-school',
+    loadChildren: () => import('./classroom-add-school/classroom-add-school.module').then( m => m.ClassroomAddSchoolPageModule)
+  },
+  {
+    path: 'classroom-add-college',
+    loadChildren: () => import('./classroom-add-college/classroom-add-college.module').then( m => m.ClassroomAddCollegePageModule)
+  },
+  {
+    path: 'classroom-add-center',
+    loadChildren: () => import('./classroom-add-center/classroom-add-center.module').then( m => m.ClassroomAddCenterPageModule)
+  },
   
 ];
 

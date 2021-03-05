@@ -1,43 +1,59 @@
-<ion-header>
+<ion-header dir="rtl">
   <ion-toolbar>
-    <ion-title>Classroom-edit</ion-title>
+    <ion-title>واجب </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content dir="rtl">
   <div>
-    <h2>Classroom Edit</h2>
+    <h2>تعديل بيانات الفصل أو المجموعة </h2>
     <div>
         <ion-item>
-          <ion-label>Classroom Name:</ion-label>
+          <ion-label *ngIf="classroomData.category=='school'"> اسم الفصل</ion-label>
+          <ion-label *ngIf="classroomData.category=='college'"> اسم المستوى</ion-label>
           <ion-input [(ngModel)]="classroomData.classroomName" placeholder="Classroom Name"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item hidden=true>
           <ion-label>Private Classroom:</ion-label>
           <ion-checkbox  [(ngModel)]="classroomData.private"></ion-checkbox> 
         </ion-item>
-        <ion-item>
+        <ion-item hidden=true>
           <ion-label>Active: </ion-label>
           <ion-checkbox [(ngModel)]="classroomData.active"></ion-checkbox> 
         </ion-item>
         <ion-item>
-          <ion-label>School Name:</ion-label>
+          <ion-label *ngIf="classroomData.category=='school'"> اسم المدرسة</ion-label>
+          <ion-label *ngIf="classroomData.category=='college'"> اسم الجامعة</ion-label>
           <ion-input [(ngModel)]="classroomData.schoolName"></ion-input> 
         </ion-item>
-        <ion-item>
+        <ion-item hidden=true>
           <ion-label>Category :</ion-label>
           <ion-input [(ngModel)]="classroomData.category"></ion-input> 
         </ion-item>
+        <ion-item  *ngIf="classroomData.category=='school'">
+          <ion-label>الشعبة :</ion-label>
+          <ion-input [(ngModel)]="classroomData.branch"></ion-input> 
+        </ion-item>
+        <ion-item  *ngIf="classroomData.category=='college'">
+          <ion-label>الكلية :</ion-label>
+          <ion-input [(ngModel)]="classroomData.college"></ion-input> 
+        </ion-item>
+        <ion-item  *ngIf="classroomData.category=='college'">
+          <ion-label>القسم :</ion-label>
+          <ion-input [(ngModel)]="classroomData.department"></ion-input> 
+        </ion-item>
         <ion-item>
-          <ion-label>Start Date:</ion-label>
+          <ion-label> تاريخ البداية:</ion-label>
           <ion-datetime [(ngModel)]="classroomData.startDate"></ion-datetime> 
         </ion-item>
         <ion-item>
-          <ion-label>End Date:</ion-label>
+          <ion-label>تاريخ النهاية :</ion-label>
           <ion-datetime [(ngModel)]="classroomData.endDate"></ion-datetime> 
         </ion-item>
         
     </div>
-    <ion-button (click)="editClassroom()">Save</ion-button>
+    <ion-button (click)="editClassroom()">تعديل</ion-button>
+    <ion-button (click)="cancelEdit()">تراجع</ion-button>
+
   </div>
 </ion-content>

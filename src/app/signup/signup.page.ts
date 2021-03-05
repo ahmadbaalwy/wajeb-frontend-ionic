@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
 
@@ -10,8 +11,11 @@ import { ProfileService } from '../services/profile.service';
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
+  loading: any;
   @Input() credentials = {fullName:'', email:'', password:'', role:''}
-  constructor(private authService: AuthService, private router:Router, private alertCtrl: AlertController, private profileService: ProfileService) { }
+  constructor(private authService: AuthService, private router:Router, private alertCtrl: AlertController, 
+    private profileService: ProfileService,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
   }
@@ -21,9 +25,18 @@ export class SignupPage implements OnInit {
   }
 
   async signupUser(credentials): Promise<void> {
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.authService.signupUser(credentials.email, credentials.password).then(
       () => {
-        this.profileService.setProfile(this.credentials).subscribe(
+        this.profileService.setProfile(this.credentials)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             if(this.credentials.role=="teacher"){
               this.router.navigate(['/home']);

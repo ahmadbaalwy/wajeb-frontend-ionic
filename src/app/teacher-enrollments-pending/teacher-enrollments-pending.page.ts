@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Enrollment, enrollmentDetails, EnrollmentService } from '../services/enrollment.service';
 
 @Component({
@@ -8,17 +10,29 @@ import { Enrollment, enrollmentDetails, EnrollmentService } from '../services/en
   styleUrls: ['./teacher-enrollments-pending.page.scss'],
 })
 export class TeacherEnrollmentsPendingPage implements OnInit {
+  loading: any;
   classroomId: any;
   enrollments: enrollmentDetails[] = [];
-  constructor(private enrollmentService: EnrollmentService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private enrollmentService: EnrollmentService, private route: ActivatedRoute, private router: Router,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
     this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
-    this.enrollmentService.getPendingEnrollments(this.classroomId).subscribe(
+    
+      this.loading = await this.loadingController.create({
+        cssClass: 'loading-class',
+        message: 'الرجاء الانتظار...',
+        
+      });
+      await this.loading.present();
+
+    this.enrollmentService.getPendingEnrollments(this.classroomId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
       data => {
         this.enrollments = data;
         console.log(this.enrollments);
@@ -29,12 +43,21 @@ export class TeacherEnrollmentsPendingPage implements OnInit {
     );
   }
 
-  approvePendingEnrollment(enrollmentId){
-    this.enrollmentService.approvePendingEnrollment(enrollmentId).subscribe(
+  async approvePendingEnrollment(enrollmentId){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
+    this.enrollmentService.approvePendingEnrollment(enrollmentId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
       data => {
         console.log(data);
         //this.router.navigate(['/teacher-enrollments-pending'], {queryParams: {classroomId: this.classroomId} });
-        this.ionViewDidEnter();
+        this.ionViewWillEnter();
       },
       err => {
       }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Classroom } from '../services/classroom.service';
 import { Question } from '../services/question.service';
 import { Quizz, QuizzService } from '../services/quizz.service';
@@ -11,20 +12,38 @@ import { Quizz, QuizzService } from '../services/quizz.service';
   styleUrls: ['./quizz-teacher-main.page.scss'],
 })
 export class QuizzTeacherMainPage implements OnInit {
+  loading: any;
   quizzId: any;
   quizz: Quizz[]=[];
   questions: Question[]=[];
   classroomId: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService, public actionSheetController: ActionSheetController) { }
+  constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService, 
+    public actionSheetController: ActionSheetController,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
+    
+    
+  }
+
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.quizzId = (params['quizzId']));
-    this.quizzService.editQuizzGet(this.quizzId).subscribe(
+    this.quizzService.editQuizzGet(this.quizzId)
+    .subscribe(
         data => {
           this.quizz=data;
-          this.quizzService.getClassroomId(this.quizzId).subscribe(
+          this.quizzService.getClassroomId(this.quizzId)
+          .pipe(finalize(async() => { await this.loading.dismiss()}))
+          .subscribe(
             data => {
               this.classroomId=data;
           },
@@ -37,7 +56,6 @@ export class QuizzTeacherMainPage implements OnInit {
         console.log(err);
       }
       );
-    
   }
 
   backToClassroomHome(quizzId: any){
@@ -48,25 +66,6 @@ export class QuizzTeacherMainPage implements OnInit {
 
   ionViewDidEnter(){
     
-     this.route.queryParams.subscribe(
-      params => this.quizzId = (params['quizzId']));
-    this.quizzService.editQuizzGet(this.quizzId).subscribe(
-        data => {
-          console.log(data);
-          this.quizz=data;
-          this.quizzService.getClassroomId(this.quizzId).subscribe(
-            data => {
-              this.classroomId=data;
-          },
-          err => {
-            console.log(err);
-          }
-          );
-      },
-      err => {
-        console.log(err);
-      }
-      );
   }
 
   editQuizz(quizzId){

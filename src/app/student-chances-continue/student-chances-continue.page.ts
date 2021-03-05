@@ -6,6 +6,8 @@ import { Quizz, QuizzService } from '../services/quizz.service';
 import { Question, QuestionService } from '../services/question.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { LoadingController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 
 class questionData{
   seq: number;
@@ -40,6 +42,7 @@ class chanceAnswerData{
 
 
 export class StudentChancesContinuePage implements OnInit {
+  loading: any;
   quizzId: any;
   chanceId: any;
   chance: Chance;
@@ -62,14 +65,22 @@ export class StudentChancesContinuePage implements OnInit {
     private quizzService: QuizzService,
     private questionService: QuestionService,
     private domSanitizer: DomSanitizer,
-    private photoViewer: PhotoViewer) { }
+    private photoViewer: PhotoViewer,
+    private loadingController: LoadingController) { }
 
   ngOnInit() {
     
   }
   
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.chanceId = (params['chanceId']));
       this.chanceService.getQuizzId(this.chanceId).subscribe(
@@ -90,7 +101,9 @@ export class StudentChancesContinuePage implements OnInit {
                 data => {
                   this.answersList = data;
                   console.log(this.answersList);
-                  this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+                  this.questionService.getQuestionPhoto(this.currentQuestionId)
+                  .pipe(finalize(async() => { await this.loading.dismiss()}))
+                  .subscribe(
                     data => {
                       this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
                     },
@@ -116,7 +129,13 @@ export class StudentChancesContinuePage implements OnInit {
 
   }
 
-  nextQuestion(){
+  async nextQuestion(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
     this.answersList.forEach(element => {
       this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
         data => {
@@ -134,7 +153,9 @@ export class StudentChancesContinuePage implements OnInit {
       data => {
         this.answersList = data;
         console.log(this.answersList);
-        this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+        this.questionService.getQuestionPhoto(this.currentQuestionId)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
           },
@@ -148,7 +169,14 @@ export class StudentChancesContinuePage implements OnInit {
     );
   }
 
-  previousQuestion(){
+  async previousQuestion(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.answersList.forEach(element => {
       this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
         data => {
@@ -165,7 +193,9 @@ export class StudentChancesContinuePage implements OnInit {
       data => {
         this.answersList = data;
         console.log(this.answersList);
-        this.questionService.getQuestionPhoto(this.currentQuestionId).subscribe(
+        this.questionService.getQuestionPhoto(this.currentQuestionId)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.questionPhoto = this.domSanitizer.bypassSecurityTrustUrl("data:Image/*;base64,"+ data.picByte);
           },
@@ -179,12 +209,21 @@ export class StudentChancesContinuePage implements OnInit {
     );
   }
 
-  submitChance(){
+  async submitChance(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.answersList.forEach(element => {
       this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
         data => {
           console.log("chanceAnswer: " + element.chanceAnswerId + "edited successfully");
-          this.chanceService.gradeChance(this.chanceId).subscribe(
+          this.chanceService.gradeChance(this.chanceId)
+          .pipe(finalize(async() => { await this.loading.dismiss()}))
+          .subscribe(
             data => {
               this.chance = data;
               console.log(this.chance);

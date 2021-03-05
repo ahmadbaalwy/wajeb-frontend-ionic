@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
+import { finalize } from 'rxjs/operators';
 import { Classroom, ClassroomService } from '../services/classroom.service';
 import { Quizz } from '../services/quizz.service';
 
@@ -10,20 +11,32 @@ import { Quizz } from '../services/quizz.service';
   styleUrls: ['./classroom-student-main.page.scss'],
 })
 export class ClassroomStudentMainPage implements OnInit {
+  loading: any;
   classroomId: number;
   classroom: Classroom[] = [];
   quizzes: Quizz[] = [];
   classroomName: any;
-  constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService ) { }
+  constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService,
+    private loadingController: LoadingController ) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
     
      this.route.queryParams.subscribe(
       params => this.classroomId = (params['classroomId']));
-    this.classroomService.editClassroomGet(this.classroomId).subscribe(
+
+      this.loading = await this.loadingController.create({
+        cssClass: 'loading-class',
+        message: 'الرجاء الانتظار...',
+        
+      });
+      await this.loading.present();
+
+    this.classroomService.editClassroomGet(this.classroomId)
+    .pipe(finalize(async() => { await this.loading.dismiss()}))
+    .subscribe(
         data => {
           this.classroom=data;
           this.quizzes = data.quizzes;

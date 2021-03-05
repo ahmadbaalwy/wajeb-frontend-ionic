@@ -1,0 +1,30 @@
+<ion-header dir="rtl">
+  <ion-toolbar>
+    <ion-title slot="start">واجب </ion-title>
+    <ion-buttons slot="end">
+      <ion-label>رجوع</ion-label>
+      <ion-icon (click)="goHome();" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content dir="rtl">
+  <ion-item>
+    <ion-label>
+      تسجيل الدخول باستخدام إيميل وكلمة سر
+    </ion-label>
+  </ion-item>
+  
+
+  <ion-input [(ngModel)]="credentials.email" placeholder="البريد الإلكتروني"></ion-input>
+  <ion-input [(ngModel)]="credentials.password" placeholder="كلمة السر" type="password"></ion-input>
+  <ion-button expand="block" (click)="loginUser(credentials)">تسجيل الدخول</ion-button>
+  <ion-item>
+    <ion-label>
+      ليس لديك حساب سابق ؟!.. اضغط على "حساب جديد"
+    </ion-label>
+  </ion-item>
+  <ion-button expand="block" (click)="signupUser(credentials)">حساب جديد</ion-button>
+
+
+</ion-content>

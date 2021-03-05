@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import firebase from 'firebase';
+import { finalize } from 'rxjs/operators';
 import { ChanceAnswerService } from '../services/chance-answer.service';
 import { Chance, ChanceService } from '../services/chance.service';
 import { QuizzService } from '../services/quizz.service';
@@ -11,6 +13,7 @@ import { QuizzService } from '../services/quizz.service';
   styleUrls: ['./student-chances-main.page.scss'],
 })
 export class StudentChancesMainPage implements OnInit {
+  loading: any;
   userToken: any;
   quizzId: any;
   chanceId: any;
@@ -23,13 +26,21 @@ export class StudentChancesMainPage implements OnInit {
      private ChanceAnswerService: ChanceAnswerService,
      private quizzService: QuizzService,
      private route: ActivatedRoute,
-     private router: Router
+     private router: Router,
+     private loadingController: LoadingController
      ) { }
 
   ngOnInit() {
   }
 
-  ionViewDidEnter(){
+  async ionViewWillEnter(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+
     this.route.queryParams.subscribe(
       params => this.quizzId = (params['quizzId']));
     firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
@@ -54,7 +65,9 @@ export class StudentChancesMainPage implements OnInit {
           err => {
           }
         );
-        this.quizzService.getMaxAllowedChances(this.quizzId).subscribe(
+        this.quizzService.getMaxAllowedChances(this.quizzId)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             this.maxAllowedChances = data;
             console.log(this.maxAllowedChances);
@@ -69,7 +82,14 @@ export class StudentChancesMainPage implements OnInit {
     });
   }
 
-  newChance(){
+  async newChance(){
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
+    
     this.chanceData.token = this.userToken;
     this.chanceData.quizzId = this.quizzId;
     console.log(this.chanceData);
@@ -77,7 +97,9 @@ export class StudentChancesMainPage implements OnInit {
       data => {
         console.log(data);
         this.chanceId = data;
-        this.ChanceAnswerService.addChanceAnswer(this.chanceId).subscribe(
+        this.ChanceAnswerService.addChanceAnswer(this.chanceId)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
           data => {
             console.log(data);
             this.router.navigate(['/student-chances-continue'], {queryParams: {chanceId: this.chanceId} });
