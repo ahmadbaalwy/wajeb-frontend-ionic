@@ -48,13 +48,13 @@
         </ion-item>
         
         <ion-item>
-          <ion-button *ngIf="classroom.status==null" (click)="addEnrollment(classroom.classroomId);">
+          <ion-button *ngIf="classroom.status===null" (click)="addEnrollment(classroom.classroomId);">
             طلب التسجيل
           </ion-button>
-          <ion-button *ngIf="classroom.status=='pending'" disabled="true">
+          <ion-button *ngIf="classroom.status==='pending'" disabled="true">
             لقد قمت بطلب التسجيل سابقا - في انتظار موافقة المدرس
           </ion-button>
-          <ion-button *ngIf="classroom.status=='approved'" disabled="true">
+          <ion-button *ngIf="classroom.status==='approved'" disabled="true">
             أنت مسجل بالفعل في هذا الفصل
           </ion-button>
         </ion-item>

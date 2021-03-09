@@ -23,7 +23,7 @@ code:any;
   constructor(
     public windowService: WindowService,
     private profileService : ProfileService,
-    private router: Router,
+    public router: Router,
     private loadingController: LoadingController
   ) { }
 
@@ -66,6 +66,7 @@ sendLoginCode(){
 }
 
 async verifyCode(){
+  var that= this;
   this.loading = await this.loadingController.create({
     cssClass: 'loading-class',
     message: 'الرجاء الانتظار...',
@@ -73,7 +74,8 @@ async verifyCode(){
   });
   await this.loading.present();
 
-  this.windowRef.confirmationResult.confirm(this.code).then(result => {
+  this.windowRef.confirmationResult.confirm(this.code)
+  .then(result => {
     // User is signed in now.
     console.log(result.user.phoneNumber)
     this.profileService.getRole(result.user.phoneNumber)
@@ -93,11 +95,15 @@ async verifyCode(){
 
       },
       err => {
+        
         console.log(err);
       }
      );
   })
   .catch(function(error) {
+        that.loading.dismiss();
+        alert(error);
+        that.router.navigate(['/login']);
     console.log("error", error);
   });
 }

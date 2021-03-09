@@ -31,4 +31,11 @@ export class quizzAnswerService {
     {headers: headers});
   }
 
+  editQuizzAnswerPost(quizzAnswerId: any, quizzAnswerData): Observable<any>{
+    let headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.post(API_URL + "quizzAnswers/editQuizzAnswer", 
+    quizzAnswerData,
+    {headers: headers, params: {quizzAnswerId: quizzAnswerId}});
+  }
+
 }

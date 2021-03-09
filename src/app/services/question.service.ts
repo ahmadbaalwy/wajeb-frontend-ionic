@@ -41,6 +41,18 @@ export class QuestionService {
     return this.http.get<Question>(API_URL + 'questions/editQuestion', {responseType: 'json', params: {questionId: questionId}});
   }
 
+  editQuestionPost(questionId: any, questionData): Observable<any>{
+    let headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.post(API_URL + "questions/editQuestion", 
+    questionData,
+    {headers: headers, params: {questionId: questionId}});
+  }
+
+  deleteQuestion(questionId: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.delete(API_URL + 'questions/deleteQuestion', {headers: headers, params: {questionId: questionId}});
+  }
+
   getQuizzId(questionId: any): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
     return this.http.get(API_URL + 'questions/getQuizzId', {responseType: 'json', headers: headers, params: {questionId: questionId}});

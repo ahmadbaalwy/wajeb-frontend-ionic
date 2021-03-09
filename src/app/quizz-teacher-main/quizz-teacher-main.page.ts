@@ -30,7 +30,7 @@ export class QuizzTeacherMainPage implements OnInit {
   async ionViewWillEnter(){
     this.loading = await this.loadingController.create({
       cssClass: 'loading-class',
-      message: 'الرجاء الانتظار...',
+      message: 'يتم تحميل بيانات من النت... الرجاء الانتظار',
       
     });
     await this.loading.present();
@@ -111,6 +111,11 @@ export class QuizzTeacherMainPage implements OnInit {
 
   viewQuestion(questionId){
     this.router.navigate(['/question-teacher'], {queryParams: {questionId: questionId} });
+
+  }
+
+  goToStudentScores(quizzId){
+    this.router.navigate(['/students-scores'], {queryParams: {quizzId: quizzId} });
 
   }
 

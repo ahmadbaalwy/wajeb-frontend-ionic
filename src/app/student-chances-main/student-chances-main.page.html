@@ -13,6 +13,16 @@
 <div *ngIf="!pendingChances.length && submittedChances.length < maxAllowedChances">
   <ion-item>
     <ion-label>
+      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      لقد استخدمت {{submittedChances.length}} من هذه الفرص
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
       للبدء في الإجابة على أسئلة الواجب قم بالضغط على ابدأ الإجابة
     </ion-label>
   </ion-item>
@@ -24,12 +34,32 @@
 </div>
 <div *ngIf="submittedChances.length >= maxAllowedChances">
   <ion-item>
+    <ion-label>
+      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      لقد استخدمت {{submittedChances.length}} من هذه الفرص
+    </ion-label>
+  </ion-item>
+  <ion-item>
     <ion-button>
       لقد أكملت كل الفرص المتاحة لك في هذا الواجب
     </ion-button>
   </ion-item>
 </div>
 <div *ngIf="pendingChances.length==1">
+  <ion-item>
+    <ion-label>
+      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+    </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      لقد استخدمت {{submittedChances.length}} من هذه الفرص
+    </ion-label>
+  </ion-item>
   <ion-item>
     <ion-label class="ion-text-wrap">لم تقم بإكمال الإجابة السابقة لهذا الواجب، لإكمال إجاباتك قم بالضغط على مواصلة الإجابة</ion-label>
   </ion-item>

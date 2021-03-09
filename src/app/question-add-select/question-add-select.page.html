@@ -13,13 +13,15 @@
           <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
         </ion-item>
         <ion-item>
-
+          <ion-label>
+            إضافة صورة للسؤال
+          </ion-label>
           <ion-fab-button (click)="addQuestionPhoto()">
             <ion-icon name="camera"></ion-icon>
           </ion-fab-button>
         </ion-item>
       
-        <ion-grid>
+        <ion-grid *ngIf="photoService.photo.webviewPath">
           <ion-row>
           <ion-col size="6">
               <ion-img [src]="photoService.photo.webviewPath"></ion-img>

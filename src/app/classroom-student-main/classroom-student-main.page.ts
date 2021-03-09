@@ -16,6 +16,7 @@ export class ClassroomStudentMainPage implements OnInit {
   classroom: Classroom[] = [];
   quizzes: Quizz[] = [];
   classroomName: any;
+  courseName: any;
   constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService,
     private loadingController: LoadingController ) { }
 
@@ -25,7 +26,10 @@ export class ClassroomStudentMainPage implements OnInit {
   async ionViewWillEnter(){
     
      this.route.queryParams.subscribe(
-      params => this.classroomId = (params['classroomId']));
+      params => {
+        this.classroomId = (params['classroomId']);
+        this.courseName = (params['courseName']);
+      });
 
       this.loading = await this.loadingController.create({
         cssClass: 'loading-class',

@@ -72,7 +72,8 @@ export class StudentHomePage implements OnInit {
             console.log(this.enrollments);
           },
           err => {
-            //this.courses = err.error.message;
+            alert("خطأ في الاتصال بالنت");
+            this.router.navigate(['/login']);
           }
         );
       } else {
@@ -85,8 +86,8 @@ export class StudentHomePage implements OnInit {
     this.router.navigate(['/student-classroom-search']);
   }
 
-  goToClassroom(classroomId){
-    this.router.navigate(['/classroom-student-main'], {queryParams: {classroomId: classroomId} });
+  goToClassroom(classroomId, courseName){
+    this.router.navigate(['/classroom-student-main'], {queryParams: {classroomId: classroomId, courseName: courseName} });
 
   }
 

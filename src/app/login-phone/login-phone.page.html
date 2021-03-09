@@ -29,11 +29,13 @@
 
    <div *ngIf="codeSent">
      <ion-item>
-       <ion-label> الكود</ion-label>
-      <ion-input [(ngModel)]="code" ></ion-input>
+       <ion-label text-wrap> لقد تم إرسال الكود برسالة نصية إلى رقمك،، الرجاء كتابة هذا الكود والمتابعة</ion-label>
+     </ion-item>
+     <ion-item>
+       <ion-input [(ngModel)]="code" ></ion-input>
      </ion-item>
      
-    <ion-button (click)="verifyCode()">التحقق من الكود</ion-button>
+    <ion-button (click)="verifyCode()"> متابعة </ion-button>
 
    </div>
 

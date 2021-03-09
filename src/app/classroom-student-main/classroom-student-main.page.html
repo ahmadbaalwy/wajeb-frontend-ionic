@@ -11,7 +11,7 @@
   <ion-content class="ion-padding" dir="rtl">
     <ion-item>     
         <h3>
-          {{classroom.classroomName}}
+          {{classroom.classroomName}} - {{courseName}}
         </h3>  
     </ion-item>
     <div *ngIf="!quizzes.length">
@@ -40,9 +40,9 @@
           
         </ion-card-content>
         <div *ngFor="let quizz of classroom.quizzes;">
-            <ion-item>
+            <ion-item (click)="openQuizz(quizz.id);"> 
               {{quizz.quizzName}}
-              <ion-icon (click)="openQuizz(quizz.id);" slot="end" name="arrow-back-outline"></ion-icon>
+              <ion-icon  slot="end" name="arrow-back-outline"></ion-icon>
             </ion-item>
       </div>
       </ion-card>

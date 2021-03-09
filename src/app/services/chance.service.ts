@@ -67,6 +67,12 @@ export class ChanceService {
 
   }
 
+  getStudentsScores(quizzId): Observable<any>{
+    let headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.get(API_URL + 'chances/getStudentsScores', {responseType: 'json', params: {quizzId: quizzId}});
+
+  }
+
   
 
 

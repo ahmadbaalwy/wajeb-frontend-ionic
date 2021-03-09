@@ -21,6 +21,8 @@ export class StudentChancesMainPage implements OnInit {
   submittedChances: Chance[]=[];
   maxAllowedChances: any;
   chanceData = {token:'', quizzId:''};
+  loading1: HTMLIonLoadingElement;
+  loading2: HTMLIonLoadingElement;
 
   constructor(private chanceService: ChanceService, 
      private ChanceAnswerService: ChanceAnswerService,
@@ -41,13 +43,31 @@ export class StudentChancesMainPage implements OnInit {
     });
     await this.loading.present();
 
+    this.loading1 = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading1.present();
+
+    this.loading2 = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading2.present();
+
+
+
     this.route.queryParams.subscribe(
       params => this.quizzId = (params['quizzId']));
     firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
       if (user) {
         this.userToken = await user.getIdToken();
         console.log(this.userToken);
-        this.chanceService.getStudentPendingChances(this.userToken, this.quizzId).subscribe(
+        this.chanceService.getStudentPendingChances(this.userToken, this.quizzId)
+        .pipe(finalize(async() => { await this.loading1.dismiss()}))
+        .subscribe(
           data => {
             this.pendingChances = data;
             console.log(this.pendingChances);
@@ -56,7 +76,9 @@ export class StudentChancesMainPage implements OnInit {
           err => {
           }
         );
-        this.chanceService.getStudentSubmittedChances(this.userToken, this.quizzId).subscribe(
+        this.chanceService.getStudentSubmittedChances(this.userToken, this.quizzId)
+        .pipe(finalize(async() => { await this.loading2.dismiss()}))
+        .subscribe(
           data => {
             this.submittedChances = data;
             console.log(this.submittedChances);

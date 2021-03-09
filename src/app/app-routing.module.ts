@@ -146,7 +146,11 @@ const routes: Routes = [
   {
     path: 'classroom-add-center',
     loadChildren: () => import('./classroom-add-center/classroom-add-center.module').then( m => m.ClassroomAddCenterPageModule)
+  },  {
+    path: 'students-scores',
+    loadChildren: () => import('./students-scores/students-scores.module').then( m => m.StudentsScoresPageModule)
   },
+
   
 ];
 

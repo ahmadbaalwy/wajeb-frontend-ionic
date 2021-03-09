@@ -39,7 +39,7 @@
         <ion-button disabled="true" expand="block" *ngIf="enrollment.status=='pending'" >
           في انتظار موافقة المدرس
         </ion-button>
-        <ion-button (click)="goToClassroom(enrollment.classroomId);" expand="block" *ngIf="enrollment.status=='approved'" >
+        <ion-button (click)="goToClassroom(enrollment.classroomId, enrollment.course_name);" expand="block" *ngIf="enrollment.status=='approved'" >
           الدخول إلى هذا الفصل
         </ion-button>
       </ion-card-content>

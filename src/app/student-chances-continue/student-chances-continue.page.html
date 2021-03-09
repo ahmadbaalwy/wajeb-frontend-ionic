@@ -32,12 +32,30 @@
       <ion-item>
         <img [src]="questionPhoto" width="100" height="100" (click)="openPhoto();"/>
       </ion-item>
-      <div *ngFor="let answer of answersList">
-        <ion-item>
-          <ion-label> {{answer.chanceAnswerText}} </ion-label>
-          <ion-checkbox [(ngModel)]="answer.chanceAnswerSelected"></ion-checkbox>
+
+      <div *ngIf="question.questionType==='select' || question.questionType==='tf'">
+        <ion-radio-group [(ngModel)]="answerSelected">
+          <ion-item *ngFor="let answer of answersList;">
+            <ion-label>{{answer.chanceAnswerText}}</ion-label>
+            <ion-radio [value]="answer.chanceAnswerId">
+              
+            </ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+      <div *ngIf="question.questionType==='mcq'">
+        <ion-item *ngFor="let answer of answersList;">
+          <ion-item>
+            <ion-label>{{answer.chanceAnswerText}}
+              </ion-label>
+            <ion-checkbox  slot="end" [(ngModel)]="answer.chanceAnswerSelected">
+            </ion-checkbox>
+    
+          </ion-item>
         </ion-item>
       </div>
+
+      
       <ion-item>
         <ion-button *ngIf="question.seq > 1" (click)="previousQuestion();">السؤال السابق</ion-button>
         <ion-button *ngIf="question.seq < questionsList.length" (click)="nextQuestion();">السؤال التالي</ion-button>

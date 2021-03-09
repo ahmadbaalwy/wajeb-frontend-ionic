@@ -34,7 +34,12 @@ export class StudentClassroomSearchPage implements OnInit {
 
     firebase.auth().onAuthStateChanged( user => {
       if (user) {
-        this.username = user.email;
+        if (user.email){
+          this.username = user.email;
+        }
+        else if (user.phoneNumber){
+          this.username = user.phoneNumber
+        }
         this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username)
         .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(

@@ -39,10 +39,10 @@ export class LoginEmailPage implements OnInit {
         .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(
           data => {
-            if(data=="teacher"){
+            if(data==="teacher"){
               this.router.navigate(['/home']);
             }
-            if(data=="student"){
+            if(data==="student"){
               this.router.navigate(['/student-home']);
             }
           },

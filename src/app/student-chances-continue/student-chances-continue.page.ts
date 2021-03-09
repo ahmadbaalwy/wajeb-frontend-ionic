@@ -13,11 +13,13 @@ class questionData{
   seq: number;
   questionId: number;
   questionText: string;
+  questionType: string;
 
-  constructor (seq: number, questionId: number, questionText: string){
+  constructor (seq: number, questionId: number, questionText: string, questionType: string){
     this.seq = seq;
     this.questionId = questionId;
     this.questionText = questionText;
+    this.questionType = questionType;
   }
   
 }
@@ -52,12 +54,16 @@ export class StudentChancesContinuePage implements OnInit {
   currentQuestionSeq: number = 0;
   currentQuestionText: any;
   currentQuestionId: any;
+  chanceAnswers: chanceAnswerData[]=[];
   answersList: chanceAnswerData[]=[];
+  answerSelected: 0;
   questionPhoto: any;
   @Input() chanceAnswerData1 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
   @Input() chanceAnswerData2 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
   @Input() chanceAnswerData3 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
   @Input() chanceAnswerData4 = {chanceAnswerId:0, chanceAnswerText:'', chanceAnswerSelected:false};
+  loading1: HTMLIonLoadingElement;
+  currentQuestionType: string;
 
   constructor(private chanceService: ChanceService, private ChanceAnswerService: ChanceAnswerService,
     private route: ActivatedRoute,
@@ -74,6 +80,9 @@ export class StudentChancesContinuePage implements OnInit {
   
 
   async ionViewWillEnter(){
+    this.answerSelected = 0;
+    this.questionsList = [];
+    this.answersList = [];
     this.loading = await this.loadingController.create({
       cssClass: 'loading-class',
       message: 'الرجاء الانتظار...',
@@ -92,14 +101,18 @@ export class StudentChancesContinuePage implements OnInit {
               this.questions = data.questions;
               console.log(this.quizz);
               this.questions.forEach((element, index) => {
-                this.questionsList.push(new questionData(index+1,element.id,element.text));
+                this.questionsList.push(new questionData(index+1,element.id,element.text, element.type));
               });
               console.log(this.questionsList);
               this.currentQuestionId = this.questionsList[this.currentQuestionSeq].questionId;
               this.currentQuestionText = this.questionsList[this.currentQuestionSeq].questionText;
+              this.currentQuestionType = this.questionsList[this.currentQuestionSeq].questionType;
               this.ChanceAnswerService.getChanceAnswerData(this.chanceId, this.currentQuestionId).subscribe(
                 data => {
-                  this.answersList = data;
+                  this.chanceAnswers = data;
+                  this.chanceAnswers.forEach((element, index) => {
+                    this.answersList.push(new chanceAnswerData(element.chanceAnswerId,element.chanceAnswerText, element.chanceAnswerSelected));
+                  });
                   console.log(this.answersList);
                   this.questionService.getQuestionPhoto(this.currentQuestionId)
                   .pipe(finalize(async() => { await this.loading.dismiss()}))
@@ -130,14 +143,28 @@ export class StudentChancesContinuePage implements OnInit {
   }
 
   async nextQuestion(){
-    this.loading = await this.loadingController.create({
+    this.loading1 = await this.loadingController.create({
       cssClass: 'loading-class',
-      message: 'الرجاء الانتظار...',
+      message: 'يتم حفظ إجاباتك...الرجاء الانتظار...',
       
     });
-    await this.loading.present();
+    await this.loading1.present();
+
+    
     this.answersList.forEach(element => {
-      this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
+      if (this.currentQuestionType==="select" || this.currentQuestionType==="tf")
+      {
+        if (element.chanceAnswerId === this.answerSelected){
+          element.chanceAnswerSelected = true;
+        }
+        else {
+          element.chanceAnswerSelected =false;
+        }
+      }
+    
+      this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected)
+      .pipe(finalize(async() => { await this.loading1.dismiss()}))
+      .subscribe(
         data => {
           console.log("chanceAnswer: " + element.chanceAnswerId + "edited successfully");
         },
@@ -145,10 +172,16 @@ export class StudentChancesContinuePage implements OnInit {
         }
       );
     });
-    
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'يتم تحميل السؤال...الرجاء الانتظار...',
+      
+    });
+    await this.loading1.present();
     this.currentQuestionSeq = this.currentQuestionSeq + 1;
     this.currentQuestionId = this.questionsList[this.currentQuestionSeq].questionId;
     this.currentQuestionText = this.questionsList[this.currentQuestionSeq].questionText;
+    this.currentQuestionType = this.questionsList[this.currentQuestionSeq].questionType;
     this.ChanceAnswerService.getChanceAnswerData(this.chanceId, this.currentQuestionId).subscribe(
       data => {
         this.answersList = data;
@@ -170,15 +203,27 @@ export class StudentChancesContinuePage implements OnInit {
   }
 
   async previousQuestion(){
-    this.loading = await this.loadingController.create({
+    this.loading1 = await this.loadingController.create({
       cssClass: 'loading-class',
-      message: 'الرجاء الانتظار...',
+      message: 'يتم حفظ إجاباتك... الرجاء الانتظار...',
       
     });
-    await this.loading.present();
-
+    await this.loading1.present();
+    
     this.answersList.forEach(element => {
-      this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
+      if (this.currentQuestionType==="select" || this.currentQuestionType==="tf")
+      {
+        if (element.chanceAnswerId === this.answerSelected){
+          element.chanceAnswerSelected = true;
+        }
+        else {
+          element.chanceAnswerSelected =false;
+        }
+      }
+  
+      this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected)
+      .pipe(finalize(async() => { await this.loading1.dismiss()}))
+      .subscribe(
         data => {
           console.log("chanceAnswer: " + element.chanceAnswerId + "edited successfully");
         },
@@ -186,9 +231,16 @@ export class StudentChancesContinuePage implements OnInit {
         }
       );
     });
+    this.loading = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'يتم تحميل السؤال ...الرجاء الانتظار...',
+      
+    });
+    await this.loading.present();
     this.currentQuestionSeq = this.currentQuestionSeq - 1;
     this.currentQuestionId = this.questionsList[this.currentQuestionSeq].questionId;
     this.currentQuestionText = this.questionsList[this.currentQuestionSeq].questionText;
+    this.currentQuestionType = this.questionsList[this.currentQuestionSeq].questionType;
     this.ChanceAnswerService.getChanceAnswerData(this.chanceId, this.currentQuestionId).subscribe(
       data => {
         this.answersList = data;
@@ -218,6 +270,13 @@ export class StudentChancesContinuePage implements OnInit {
     await this.loading.present();
 
     this.answersList.forEach(element => {
+      if (element.chanceAnswerId === this.answerSelected){
+        element.chanceAnswerSelected = true;
+      }
+      else {
+        element.chanceAnswerSelected =false;
+      }
+
       this.ChanceAnswerService.editChanceAnswer(element.chanceAnswerId, element.chanceAnswerSelected).subscribe(
         data => {
           console.log("chanceAnswer: " + element.chanceAnswerId + "edited successfully");
