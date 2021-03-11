@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export const API_URL = 'http://wajeb-project.el.r.appspot.com/api/';
+//export const API_URL = 'http://192.168.1.200:8080/api/';
+
 const headers = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

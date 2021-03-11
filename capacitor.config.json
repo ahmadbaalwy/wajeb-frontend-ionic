@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.wajeb.starter",
   "appName": "wajeb",
   "bundledWebRuntime": false,
   "npmClient": "npm",

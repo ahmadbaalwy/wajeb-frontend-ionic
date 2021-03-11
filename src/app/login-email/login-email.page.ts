@@ -35,6 +35,10 @@ export class LoginEmailPage implements OnInit {
 
     this.authService.loginUser(credentials.email, credentials.password).then(
       () => {
+        if (!this.credentials.email){
+          alert(null);
+
+        }
         this.profileService.getRole(this.credentials.email)
         .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(
@@ -47,6 +51,7 @@ export class LoginEmailPage implements OnInit {
             }
           },
           err => {
+            alert(err.message);
             console.log(err);
           }
          );
