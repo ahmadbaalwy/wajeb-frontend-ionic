@@ -49,20 +49,36 @@ code:any;
   await this.windowRef.recaptchaVerifier.render()*/
 }
 
-sendLoginCode(){
+async sendLoginCode(){
+  this.loading = await this.loadingController.create({
+    cssClass: 'loading-class',
+    message: 'الرجاء الانتظار...',
+    
+  });
+  await this.loading.present();
   //Make sure phone number in e164 format
      const num=this.prefix.toString() + this.line.toString();
      const appVerifier=this.windowRef.recaptchaVerifier;
+     this.buttonDisabled = true;
      firebase
   .auth()
   .signInWithPhoneNumber(num, appVerifier)
+  
   .then(result => {
     this.codeSent = true;
-    this.buttonDisabled = true;
     this.windowRef.confirmationResult = result;
+    this.loading.dismiss();
     //var code = window.prompt("Please enter your code");
     //return confirmationResult.confirm(code);
-  });
+  }
+  )
+  .catch(error => {
+    this.loading.dismiss();
+    this.buttonDisabled = false;
+    this.codeSent = false;
+  }
+  
+    )
 }
 
 async verifyCode(){

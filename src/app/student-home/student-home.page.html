@@ -16,9 +16,18 @@
     <h3>
       اسم المستخدم: {{fullName}}
     </h3>
+  </div>
+  <div *ngIf="enrollments.length===0">
+    <h2>
+      أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. لم تقم بالتسجيل في أي فصل دراسي حتى الان.. قم بالضغط على "بحث عن فصل دراسي" وابحث عن الفصل او المجموعة الذي تريد أن تسجل فيها 
+    </h2>
+  </div>
+  <div *ngIf="enrollments.length>0">
     <h2>
       أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. ستجد هنا الفصول الدراسية التي سجلت فيها 
     </h2>
+  </div>
+  <div>
     <ion-button size="mid" (click)="goToClassroomSearch();">بحث عن فصل دراسي</ion-button>
   </div>
   <div *ngFor="let enrollment of enrollments;">
