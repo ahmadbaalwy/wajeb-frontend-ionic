@@ -23,6 +23,8 @@ export class StudentChancesMainPage implements OnInit {
   chanceData = {token:'', quizzId:''};
   loading1: HTMLIonLoadingElement;
   loading2: HTMLIonLoadingElement;
+  maxScore: any;
+  loading3: HTMLIonLoadingElement;
 
   constructor(private chanceService: ChanceService, 
      private ChanceAnswerService: ChanceAnswerService,
@@ -56,6 +58,13 @@ export class StudentChancesMainPage implements OnInit {
       
     });
     await this.loading2.present();
+
+    this.loading3 = await this.loadingController.create({
+      cssClass: 'loading-class',
+      message: 'الرجاء الانتظار...',
+      
+    });
+    await this.loading3.present();
 
 
 
@@ -98,6 +107,18 @@ export class StudentChancesMainPage implements OnInit {
           err => {
           }
         );
+        this.quizzService.getMaxScore(this.quizzId)
+        .pipe(finalize(async() => { await this.loading3.dismiss()}))
+        .subscribe(
+          data => {
+            this.maxScore = data;
+            console.log(this.maxScore);
+
+          },
+          err => {
+          }
+        );
+
       } else {
         console.log("no user");
       }

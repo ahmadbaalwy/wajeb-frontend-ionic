@@ -61,4 +61,10 @@ export class QuizzService {
     let headers = new HttpHeaders().append('responseType', 'json');
     return this.http.get<Quizz>(API_URL + 'quizzes/getClassroomId', {responseType: 'json', headers: headers, params: {quizzId: quizzId}});
   }
+
+  getMaxScore(quizzId: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get<Quizz>(API_URL + 'quizzes/getMaxScore', {responseType: 'json', headers: headers, params: {quizzId: quizzId}});
+  
+  }
 }
