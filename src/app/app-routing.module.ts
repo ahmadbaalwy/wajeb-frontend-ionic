@@ -150,6 +150,10 @@ const routes: Routes = [
     path: 'students-scores',
     loadChildren: () => import('./students-scores/students-scores.module').then( m => m.StudentsScoresPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./account/account.module').then( m => m.AccountPageModule)
+  },
 
   
 ];

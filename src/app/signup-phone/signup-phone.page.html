@@ -20,7 +20,7 @@
     <ion-label>رقم التلفون</ion-label>
     <ion-input dir="ltr" disabled=true [(ngModel)]="credentials.email" placeholder="رقم الموبايل"></ion-input>
   </ion-item>
-  <ion-radio-group (ionChange)="roleSelected($event)">
+  <ion-radio-group [(ngModel)]="credentials.role" (ionChange)="roleSelected($event)">
     <ion-list-header>
       <ion-label>نوع الحساب:</ion-label>
     </ion-list-header>

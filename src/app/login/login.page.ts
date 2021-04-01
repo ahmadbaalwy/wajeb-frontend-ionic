@@ -70,15 +70,21 @@ export class LoginPage implements OnInit {
             },
             err => {
               console.log(err);
+              alert("الرجاء التأكد من الاتصال بالانترنت")
             }
            );
         }
        
       } else {
         this.loading.dismiss();
-        console.log("no user");
+        console.log("no user");//
       }
+    },
+    err => {
+      alert("الرجاء التأكد من الاتصال بالانترنت")
     });
+    
+    
   }
   
   async loginUser(credentials): Promise<void> {

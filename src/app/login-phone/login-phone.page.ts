@@ -74,6 +74,7 @@ async sendLoginCode(){
   )
   .catch(error => {
     this.loading.dismiss();
+    alert("الرجاء التأكد من الاتصال بالإنترنت");
     this.buttonDisabled = false;
     this.codeSent = false;
   }
@@ -111,7 +112,7 @@ async verifyCode(){
 
       },
       err => {
-        
+        alert("تأكد من الاتصال بالإنترنت");
         console.log(err);
       }
      );

@@ -91,6 +91,11 @@ export class StudentHomePage implements OnInit {
 
   }
 
+  goToAccountPage(){
+    this.router.navigate(['account'])
+  
+  }
+
   signOut(){
     this.authService.logoutUser().then(
       () => {

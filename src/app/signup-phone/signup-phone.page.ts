@@ -13,7 +13,7 @@ import { ProfileService } from '../services/profile.service';
 })
 export class SignupPhonePage implements OnInit {
   loading: any;
-  @Input() credentials = {fullName:'', email:'', role:''}
+  @Input() credentials = {fullName:'', email:'', role:'student'}
 
   constructor(private authService: AuthService, private router:Router, private alertCtrl: AlertController, 
   private profileService: ProfileService,
