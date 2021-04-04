@@ -60,11 +60,11 @@
         </ion-item>
         <ion-item>
           <ion-label>تاريخ بداية الدراسة</ion-label>
-          <ion-datetime [(ngModel)]="classroomData.startDate"></ion-datetime> 
+          <ion-datetime max="2030" [(ngModel)]="classroomData.startDate"></ion-datetime> 
         </ion-item>
         <ion-item>
           <ion-label>تاريخ نهاية الدراسة</ion-label>
-          <ion-datetime [(ngModel)]="classroomData.endDate"></ion-datetime> 
+          <ion-datetime max="2030" [(ngModel)]="classroomData.endDate"></ion-datetime> 
         </ion-item>
         
     </div>

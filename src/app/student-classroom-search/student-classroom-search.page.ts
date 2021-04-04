@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class StudentClassroomSearchPage implements OnInit {
   loading: any;
-  @Input() classroomSearchData = {courseName:'', schoolName:''};
+  @Input() classroomSearchData = {courseName:'', schoolName:'', teacherName:''};
   classrooms: classroomSearch[] = [];
   username: any;
   enrollmentData = {status:'pending', requestDate: Date.now(), username:'', classroom_id:''}
@@ -40,7 +40,7 @@ export class StudentClassroomSearchPage implements OnInit {
         else if (user.phoneNumber){
           this.username = user.phoneNumber
         }
-        this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username)
+        this.classroomService.searchForClassroom(this.classroomSearchData.courseName, this.classroomSearchData.schoolName, this.username, this.classroomSearchData.teacherName)
         .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(
           data => {

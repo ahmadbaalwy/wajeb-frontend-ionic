@@ -11,6 +11,7 @@ export class Quizz{
   active: boolean;
   maxChances: number;
   grade: number;
+  creationDate: Date;
   classroomId: number;
   questions: Question[];
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
+import { DateToIsoPipe } from '../date-to-iso.pipe';
 import { Classroom, ClassroomService } from '../services/classroom.service';
 import { Quizz } from '../services/quizz.service';
 
@@ -9,6 +10,7 @@ import { Quizz } from '../services/quizz.service';
   selector: 'app-classroom-student-main',
   templateUrl: './classroom-student-main.page.html',
   styleUrls: ['./classroom-student-main.page.scss'],
+  providers: [DateToIsoPipe]
 })
 export class ClassroomStudentMainPage implements OnInit {
   loading: any;
@@ -18,9 +20,15 @@ export class ClassroomStudentMainPage implements OnInit {
   classroomName: any;
   courseName: any;
   constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService,
-    private loadingController: LoadingController ) { }
+    private loadingController: LoadingController,
+    private myPipe: DateToIsoPipe ) { }
 
   ngOnInit() {
+  }
+
+  convertToIso(value: string){
+    if (value===null){return ""}
+    return this.myPipe.transform(value);
   }
 
   async ionViewWillEnter(){
@@ -43,6 +51,7 @@ export class ClassroomStudentMainPage implements OnInit {
     .subscribe(
         data => {
           this.classroom=data;
+          console.log(this.classroom);
           this.quizzes = data.quizzes;
       },
       err => {

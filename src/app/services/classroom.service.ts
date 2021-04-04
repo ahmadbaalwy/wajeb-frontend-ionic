@@ -74,9 +74,9 @@ export class ClassroomService {
     return this.http.delete(API_URL + 'classrooms/deleteClassroom', {headers: headers, params: {classroomId: classroomId}});
   }
 
-  searchForClassroom(courseName: any, schoolName: any, username: any): Observable<any>{
+  searchForClassroom(courseName: any, schoolName: any, username: any, teacherName: any): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
-    return this.http.get<classroomSearch>(API_URL + 'classrooms/searchForClassroom', {responseType: 'json', headers: headers, params: {courseName: courseName, schoolName: schoolName, username: username}});
+    return this.http.get<classroomSearch>(API_URL + 'classrooms/searchForClassroom', {responseType: 'json', headers: headers, params: {courseName: courseName, schoolName: schoolName, username: username, teacherName: teacherName}});
 
   }
 

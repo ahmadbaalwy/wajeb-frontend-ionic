@@ -138,7 +138,7 @@ signOut(){
             this.router.navigate(['/classroom-add-college'], {queryParams: {courseId: courseId} });
           }
         }, {
-          text: 'فصل في مركز لغة',
+          text: 'فصل في مركز أو معهد',
           handler: () => {
             this.router.navigate(['/classroom-add-center'], {queryParams: {courseId: courseId} });
           }

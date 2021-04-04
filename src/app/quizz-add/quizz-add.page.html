@@ -12,13 +12,23 @@
           <ion-label>عنوان الواجب</ion-label>
           <ion-input [(ngModel)]="quizzData.quizzName" placeholder="عنوان الواجب"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item hidden=true>
           <ion-label>فعال </ion-label>
           <ion-checkbox [(ngModel)]="quizzData.active"></ion-checkbox> 
         </ion-item>
         <ion-item>
           <ion-label>عدد المحاولات الممكنة</ion-label>
-          <ion-input [(ngModel)]="quizzData.maxChances"></ion-input> 
+          <ion-select [(ngModel)]="quizzData.maxChances" placeholder="عدد المحاولات المسموحة ">
+            <ion-select-option value="1">
+              1
+            </ion-select-option>
+            <ion-select-option value="2">
+              2
+            </ion-select-option>
+            <ion-select-option value="3">
+              3
+            </ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item hidden=true>
           <ion-label>درجة الواجب: </ion-label>
