@@ -12,24 +12,35 @@
 </ion-header>
 
 <ion-content dir="rtl">
-  <div>
+  <ion-item>
     <h3>
       اسم المستخدم: {{fullName}}
     </h3>
-  </div>
+  </ion-item>
+  <ion-item *ngIf="newQuizzesList.length>0" (click)="goToQuizzPage();">
+    <ion-chip color="danger">
+      <ion-label color="dark">واجبات جديدة ({{newQuizzesList.length}})</ion-label>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+    </ion-chip>
+  </ion-item>
   <div *ngIf="enrollments.length===0">
-    <h2>
+    <h3>
       أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. لم تقم بالتسجيل في أي فصل دراسي حتى الان.. قم بالضغط على "بحث عن فصل دراسي" وابحث عن الفصل او المجموعة الذي تريد أن تسجل فيها 
-    </h2>
+    </h3>
   </div>
-  <div *ngIf="enrollments.length>0">
-    <h2>
-      أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. ستجد هنا الفصول الدراسية التي سجلت فيها 
-    </h2>
-  </div>
-  <div>
-    <ion-button size="mid" (click)="goToClassroomSearch();">بحث عن فصل دراسي</ion-button>
-  </div>
+  <ion-item>
+    <div *ngIf="enrollments.length>0">
+      <h3>
+        أهلا بك في "واجب موبايل".. هذه الصفحة الرئيسية للطالب.. ستجد هنا الفصول الدراسية التي سجلت فيها 
+      </h3>
+    </div>
+  </ion-item>
+  
+  
+  <ion-item>
+    <ion-button slot="end" size="mid" (click)="goToClassroomSearch();">
+تسجيل في مادة أو فصل    </ion-button>
+  </ion-item>
   <div *ngFor="let enrollment of enrollments;">
     <ion-card>
       <ion-card-content>

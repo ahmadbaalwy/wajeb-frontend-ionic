@@ -41,8 +41,11 @@
         </ion-card-content>
         <div *ngFor="let quizz of classroom.quizzes;">
             <ion-item (click)="openQuizz(quizz.id);"> 
-              {{quizz.quizzName}} -- واجب في تاريخ 
-              <ion-datetime dir="ltr" displayFormat="DD MM YYYY" value={{convertToIso(quizz.creationDate)}}></ion-datetime>
+              {{quizz.quizzName}}  
+              <ion-item lines="none">
+                واجب في تاريخ
+                <ion-datetime disabled dir="ltr" displayFormat="DD MM YYYY" value={{convertToIso(quizz.creationDate)}}></ion-datetime>
+              </ion-item>
               <ion-icon  slot="end" name="arrow-back-outline"></ion-icon>
             </ion-item>
       </div>

@@ -25,8 +25,8 @@ export class PhotoService {
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri, 
       source: CameraSource.Camera, 
-      width: 200,
-      height: 200,
+      width: 600,
+      height: 600,
       quality: 50
     });
 

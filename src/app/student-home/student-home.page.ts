@@ -6,6 +6,7 @@ import { AuthService } from '../services/auth.service';
 import { enrollmentDetails, EnrollmentService } from '../services/enrollment.service';
 import { finalize } from 'rxjs/operators';
 import { ProfileService } from '../services/profile.service';
+import { newQuizzes, QuizzService } from '../services/quizz.service';
 
 @Component({
   selector: 'app-student-home',
@@ -16,11 +17,13 @@ export class StudentHomePage implements OnInit {
   loading: any;
   userToken: any;
   enrollments: enrollmentDetails[]=[];
+  newQuizzesList: newQuizzes[]=[];
   fullName: any;
   errorMessage: any;
   constructor(private router: Router, private enrollmentService: EnrollmentService, private authService:AuthService,
     public loadingController: LoadingController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private quizzService: QuizzService
     ) { }
 
   ngOnInit() {
@@ -65,7 +68,6 @@ export class StudentHomePage implements OnInit {
         }
 
         this.enrollmentService.getEnrollments(this.userToken)
-        .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(
           data => {
             this.enrollments = data;
@@ -76,6 +78,20 @@ export class StudentHomePage implements OnInit {
             this.router.navigate(['/login']);
           }
         );
+
+        this.quizzService.getNewQuizzes(this.userToken)
+        .pipe(finalize(async() => { await this.loading.dismiss()}))
+        .subscribe(
+          data => {
+            this.newQuizzesList = data;
+            console.log(this.newQuizzesList);
+          },
+          err => {
+            alert("خطأ في الاتصال بالنت");
+            this.router.navigate(['/login']);
+          }
+        );
+
       } else {
         console.log("no user");
       }
@@ -93,6 +109,11 @@ export class StudentHomePage implements OnInit {
 
   goToAccountPage(){
     this.router.navigate(['account'])
+  
+  }
+
+  goToQuizzPage(){
+    this.router.navigate(['new-quizzes'])
   
   }
 

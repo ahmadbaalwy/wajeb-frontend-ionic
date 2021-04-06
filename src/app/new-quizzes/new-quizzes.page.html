@@ -1,0 +1,26 @@
+<ion-header dir="rtl">
+  <ion-toolbar>
+    <ion-title slot="start">واجب موبايل</ion-title>
+    <ion-buttons slot="end" (click)="goHome();">
+      <ion-label>رجوع</ion-label>
+      <ion-icon  name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+  <h2>
+    واجبات جديدة لم يتم إكمالها
+  </h2>
+
+</ion-header>
+
+<ion-content class="ion-padding" dir="rtl">
+  <div *ngFor="let quizz of newQuizzesList;">
+    <ion-item (click)="openQuizz(quizz.quizzId);"> 
+      {{quizz.quizzName}}  
+      <ion-item lines="none">
+        واجب في تاريخ
+        <ion-datetime disabled dir="ltr" displayFormat="DD MM YYYY" value={{convertToIso(quizz.creationDate)}}></ion-datetime>
+      </ion-item>
+      <ion-icon  slot="end" name="arrow-back-outline"></ion-icon>
+    </ion-item>
+</div>
+</ion-content>

@@ -4,6 +4,17 @@ import { Observable } from 'rxjs';
 import { Question } from './question.service';
 import { API_URL } from './chance-answer.service'
 
+export class newQuizzes {
+  course_name: string;
+  classroomId: number;
+  classroom_name: string;
+  quizzId: number;
+  quizzName: string;
+  creationDate: Date;
+  username: string;
+  chanceStatus: string;
+  chanceId: number;
+}
 
 export class Quizz{
   id: number;
@@ -66,6 +77,11 @@ export class QuizzService {
   getMaxScore(quizzId: any): Observable<any>{
     let headers = new HttpHeaders().append('responseType', 'json');
     return this.http.get<Quizz>(API_URL + 'quizzes/getMaxScore', {responseType: 'json', headers: headers, params: {quizzId: quizzId}});
-  
+  }
+
+  getNewQuizzes(token: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get<newQuizzes>(API_URL + 'quizzes/getNewQuizzes', {responseType: 'json', headers: headers, params: {token: token}});
+
   }
 }
