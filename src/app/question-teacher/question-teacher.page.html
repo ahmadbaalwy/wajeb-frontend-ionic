@@ -14,11 +14,9 @@
       نص السؤال:
     </ion-label>
   </ion-item>
-  <ion-item>
-    <input [(ngModel)]="questionData.text" placeholder="نص السؤال"/>
+  <ion-item text-wrap>
+    <ion-textarea type="text" [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-textarea>
     
-    <ion-label >
-    </ion-label>
   </ion-item>
   <div>
         <div class="col-md-12">

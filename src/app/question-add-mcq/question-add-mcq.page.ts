@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { ActionSheetController, LoadingController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 import { PhotoService } from '../services/photo.service';
 import { QuestionService } from '../services/question.service';
 import { quizzAnswerService } from '../services/quizz-answer.service';
+import { QuizzService } from '../services/quizz.service';
 
 @Component({
   selector: 'app-question-add-mcq',
@@ -19,12 +20,16 @@ export class QuestionAddMcqPage implements OnInit {
   @Input() quizzAnswerData2 = {text:'', correct: false, sequence:1, questionId:0}
   @Input() quizzAnswerData3 = {text:'', correct: false, sequence:1, questionId:0}
   @Input() quizzAnswerData4 = {text:'', correct: false, sequence:1, questionId:0}
+  loading1: HTMLIonLoadingElement;
+  activateQuizz: boolean;
 
 
   constructor(private route: ActivatedRoute, private router: Router,
+    private quizzService: QuizzService,
     private questionService: QuestionService,
     private quizzAnswerService:quizzAnswerService,
     private photoService: PhotoService,
+    public actionSheetController: ActionSheetController,
     private loadingController: LoadingController) { }
 
   ngOnInit() {
@@ -71,9 +76,32 @@ export class QuestionAddMcqPage implements OnInit {
                 this.quizzAnswerService.addQuizzAnswer(this.quizzAnswerData4)
                 .pipe(finalize(async() => { await this.loading.dismiss()}))
                 .subscribe(
-                  data => {
+                  async data => {
                     this.photoService.photo.webviewPath = null;
-                    this.router.navigate(['/quizz-teacher-main'], {queryParams: {quizzId: this.questionData.quizzId} });
+                    if (this.activateQuizz){
+                      this.loading1 = await this.loadingController.create({
+                        cssClass: 'loading-class',
+                        message: 'تفعيل الواجب، الرجاء الانتظار...',
+                        
+                      });
+                      await this.loading1.present();
+                      
+                      this.quizzService.activateQuizz(this.questionData.quizzId)
+                      .pipe(finalize(async() => { await this.loading1.dismiss()}))
+                      .subscribe(
+                        data => {
+                          console.log(data);
+                          this.router.navigate(['/quizz-teacher-main'], {queryParams: {quizzId: this.questionData.quizzId} });
+                        },
+                        err => {
+                          console.log(err);
+                          this.router.navigate(['/quizz-teacher-main'], {queryParams: {quizzId: this.questionData.quizzId} });
+                        }
+                      );
+                    }
+                    else if(!this.activateQuizz){
+                      this.router.navigate(['/quizz-teacher-main'], {queryParams: {quizzId: this.questionData.quizzId} });
+                    }
                   },
                   err => {
                     console.log(err);
@@ -104,6 +132,35 @@ export class QuestionAddMcqPage implements OnInit {
 
   addQuestionPhoto(){
     this.photoService.addNewPhoto();
+  }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'هل أكملت إضافة كل أسئلة الواجب ؟',
+      cssClass: 'my-custom-class',
+      buttons: [{
+        text: 'نعم، قم بتفعيل وإظهار الواجب للطلاب',
+        handler: () => {
+          this.activateQuizz = true;
+          this.addQuestionMCQ();
+        }
+      }, {
+        text: 'لا، سأقوم بإضافة أسئلة أخرى',
+        handler: () => {
+          this.activateQuizz = false;
+          this.addQuestionMCQ();
+        }
+      }, 
+      {
+        text: 'تراجع',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
   }
 
   cancel(){

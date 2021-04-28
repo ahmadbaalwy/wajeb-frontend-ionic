@@ -22,12 +22,19 @@
         </ion-item>
         <ion-item>
           <ion-label text-wrap>عدد المحاولات المسموحة:</ion-label>
-          <ion-input [(ngModel)]="quizzData.maxChances"></ion-input> 
+          <ion-select [(ngModel)]="quizzData.maxChances" placeholder="عدد المحاولات المسموحة ">
+            <ion-select-option value="1">
+              1
+            </ion-select-option>
+            <ion-select-option value="2">
+              2
+            </ion-select-option>
+            <ion-select-option value="3">
+              3
+            </ion-select-option>
+            </ion-select>
         </ion-item>
-        <ion-item>
-          <ion-label>درجة الواجب: </ion-label>
-          <ion-input [(ngModel)]="quizzData.grade"></ion-input> 
-        </ion-item>
+        
         
     </div>
     <ion-button (click)="editQuizz()">حفظ</ion-button>

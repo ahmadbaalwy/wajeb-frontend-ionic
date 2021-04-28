@@ -10,7 +10,7 @@
     <div>
         <ion-item>
           <ion-label>نص السؤال</ion-label>
-          <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
+          <ion-textarea type="text" [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label>
@@ -77,7 +77,7 @@
         
         
     </div>
-    <ion-button (click)="addQuestionSelect()">حفظ</ion-button>
+    <ion-button (click)="presentActionSheet()">حفظ</ion-button>
     <ion-button (click)="cancel()">تراجع</ion-button>
 
   </div>

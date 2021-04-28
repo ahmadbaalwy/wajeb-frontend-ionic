@@ -19,6 +19,7 @@ export class ClassroomStudentMainPage implements OnInit {
   quizzes: Quizz[] = [];
   classroomName: any;
   courseName: any;
+  countActiveQuizzes: any;
   constructor(private router: Router, private route:ActivatedRoute, private classroomService: ClassroomService,
     private loadingController: LoadingController,
     private myPipe: DateToIsoPipe ) { }
@@ -53,6 +54,12 @@ export class ClassroomStudentMainPage implements OnInit {
           this.classroom=data;
           console.log(this.classroom);
           this.quizzes = data.quizzes;
+          this.countActiveQuizzes = 0;
+          this.quizzes.forEach(quizz => {
+            if (quizz.active){
+              this.countActiveQuizzes = this.countActiveQuizzes + 1;
+            }
+          });
       },
       err => {
         console.log(err);

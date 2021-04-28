@@ -12,7 +12,7 @@ import { QuizzService } from '../services/quizz.service';
 })
 export class QuizzAddPage implements OnInit {
   loading: any;
-  @Input() quizzData = { quizzName: '', active: true, maxChances: 1, grade: 0, classroomId: 0};
+  @Input() quizzData = { quizzName: '', active: false, maxChances: 1, grade: 0, classroomId: 0};
 
   constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService,
     private loadingController: LoadingController) { }

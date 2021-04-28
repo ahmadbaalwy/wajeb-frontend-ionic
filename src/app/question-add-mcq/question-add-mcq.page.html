@@ -5,12 +5,10 @@
 </ion-header>
 
 <ion-content dir="rtl">
-  <div>
     <h2>سؤال جديد</h2>
-    <div>
-        <ion-item>
+        <ion-item text-wrap>
           <ion-label>نص السؤال</ion-label>
-          <ion-input [(ngModel)]="questionData.text" placeholder="نص السؤال"></ion-input>
+          <ion-textarea type="text" [(ngModel)]="questionData.text" placeholder="نص السؤال" ></ion-textarea>
         </ion-item>
         <ion-item>
           <ion-label>
@@ -65,9 +63,8 @@
           </ion-item>
         </ion-item>
        
-    </div>
-    <ion-button (click)="addQuestionMCQ()">حفظ</ion-button>
-    <ion-button (click)="cancel()">تراجع</ion-button>
+      <ion-button color="primary" expand="block" (click)="presentActionSheet()">حفظ </ion-button>
+      <ion-button color="tertiary" expand="block" (click)="cancel()">تراجع</ion-button>
 
-  </div>
+  
 </ion-content>

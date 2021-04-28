@@ -32,7 +32,7 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>
-            الواجبات ({{classroom.quizzes.length}})
+            الواجبات ({{countActiveQuizzes}})
             <!-- <ion-button  size="small">عرض الكل</ion-button> -->
           </ion-card-title>
         </ion-card-header>
@@ -40,7 +40,7 @@
           
         </ion-card-content>
         <div *ngFor="let quizz of classroom.quizzes;">
-            <ion-item (click)="openQuizz(quizz.id);"> 
+            <ion-item *ngIf="quizz.active" (click)="openQuizz(quizz.id);"> 
               {{quizz.quizzName}}  
               <ion-item lines="none">
                 واجب في تاريخ

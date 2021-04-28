@@ -84,4 +84,10 @@ export class QuizzService {
     return this.http.get<newQuizzes>(API_URL + 'quizzes/getNewQuizzes', {responseType: 'json', headers: headers, params: {token: token}});
 
   }
+
+  activateQuizz(quizzId: any): Observable<any>{
+    let headers = new HttpHeaders().append('Content-Type', 'application/json');
+    return this.http.post(API_URL + "quizzes/activateQuizz","",
+    {headers: headers, params: {quizzId: quizzId}, responseType: "text"});
+  }
 }
