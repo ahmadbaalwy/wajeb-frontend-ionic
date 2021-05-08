@@ -13,7 +13,7 @@ export class QuizzEditPage implements OnInit {
   loading: any;
   quizzId: number;
   quizz: Quizz[]=[];
-  @Input() quizzData = { quizzName: '', active: true, maxChances: 1, grade: 0, classroomId:0};
+  @Input() quizzData = { quizzName: '', active: true, maxChances: 1, allowReview: false, grade: 0, classroomId:0};
   constructor(private route: ActivatedRoute, private router: Router, private quizzService: QuizzService,
     private loadingController: LoadingController) { }
 

@@ -10,10 +10,10 @@
 
 <ion-content dir="rtl">
   
-<div *ngIf="!pendingChances.length && submittedChances.length < maxAllowedChances">
+<div *ngIf="!pendingChances.length && submittedChances.length < quizz.maxChances">
   <ion-item>
     <ion-label>
-      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+      عدد الفرص المتاحة في هذا الواجب هو {{quizz.maxChances}}
     </ion-label>
   </ion-item>
   <ion-item>
@@ -32,10 +32,10 @@
     </ion-button>
   </ion-item>
 </div>
-<div *ngIf="submittedChances.length >= maxAllowedChances">
+<div *ngIf="submittedChances.length >= quizz.maxChances">
   <ion-item>
     <ion-label>
-      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+      عدد الفرص المتاحة في هذا الواجب هو {{quizz.maxChances}}
     </ion-label>
   </ion-item>
   <ion-item>
@@ -52,7 +52,7 @@
 <div *ngIf="pendingChances.length==1">
   <ion-item>
     <ion-label>
-      عدد الفرص المتاحة في هذا الواجب هو {{maxAllowedChances}}
+      عدد الفرص المتاحة في هذا الواجب هو {{quizz.maxChances}}
     </ion-label>
   </ion-item>
   <ion-item>
@@ -74,26 +74,32 @@
 <div *ngFor="let chance of submittedChances;">
   <ion-grid>
   <ion-row>
-    <ion-col>
+    <ion-col size="6">
       <ion-label>
         تاريخ المحاولة
       </ion-label>
     </ion-col>
-    <ion-col>
+    <ion-col size="2">
       <ion-label>
         الدرجة
       </ion-label>
     </ion-col>
+    <ion-col size="4">
+
+    </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col>
+    <ion-col size="6">
       <ion-datetime displayFormat="H:mm DD-MM-YYYY" display-timezone="utc" [(ngModel)]="chance.grade_date">
       </ion-datetime>  
     </ion-col>
-    <ion-col>
+    <ion-col size="2">
       <ion-label>
         {{chance.grade}} من {{maxScore}}
       </ion-label>
+    </ion-col>
+    <ion-col size="4">
+      <ion-button *ngIf="quizz.allowReview" size="small" (click)="reviewQuizz(chance.id);">مراجعة</ion-button>
     </ion-col>
   </ion-row>
 </ion-grid>

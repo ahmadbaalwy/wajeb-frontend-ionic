@@ -13,8 +13,8 @@
           <ion-label *ngIf="classroomData.category=='college'"> اسم المستوى</ion-label>
           <ion-input [(ngModel)]="classroomData.classroomName" placeholder="Classroom Name"></ion-input>
         </ion-item>
-        <ion-item hidden=true>
-          <ion-label>Private Classroom:</ion-label>
+        <ion-item>
+          <ion-label>فصل أو مجموعة مغلقة</ion-label>
           <ion-checkbox  [(ngModel)]="classroomData.private"></ion-checkbox> 
         </ion-item>
         <ion-item hidden=true>

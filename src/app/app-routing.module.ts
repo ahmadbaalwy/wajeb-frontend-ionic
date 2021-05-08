@@ -158,6 +158,10 @@ const routes: Routes = [
     path: 'new-quizzes',
     loadChildren: () => import('./new-quizzes/new-quizzes.module').then( m => m.NewQuizzesPageModule)
   },
+  {
+    path: 'quizz-review',
+    loadChildren: () => import('./quizz-review/quizz-review.module').then( m => m.QuizzReviewPageModule)
+  },
 
   
 ];

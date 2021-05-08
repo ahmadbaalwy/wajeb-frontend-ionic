@@ -21,6 +21,7 @@ export class Quizz{
   quizzName: string;
   active: boolean;
   maxChances: number;
+  allowReview: boolean;
   grade: number;
   creationDate: Date;
   classroomId: number;
@@ -90,4 +91,17 @@ export class QuizzService {
     return this.http.post(API_URL + "quizzes/activateQuizz","",
     {headers: headers, params: {quizzId: quizzId}, responseType: "text"});
   }
+
+  reviewQuizz(quizzId: any, chanceId: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get(API_URL + 'quizzes/reviewQuizz', {responseType: 'json', headers: headers, params: {quizzId: quizzId, chanceId: chanceId}});
+
+  }
+
+  getQuizzSummary(quizzId: any): Observable<any>{
+    let headers = new HttpHeaders().append('responseType', 'json');
+    return this.http.get(API_URL + 'quizzes/getQuizzSummary', {responseType: 'json', headers: headers, params: {quizzId: quizzId}});
+
+  }
+
 }

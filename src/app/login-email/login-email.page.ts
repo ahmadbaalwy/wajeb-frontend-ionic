@@ -36,8 +36,8 @@ export class LoginEmailPage implements OnInit {
     this.authService.loginUser(credentials.email, credentials.password).then(
       () => {
         if (!this.credentials.email){
-          alert(null);
-
+          //alert(null);
+          this.loading.dismiss();
         }
         this.profileService.getRole(this.credentials.email)
         .pipe(finalize(async() => { await this.loading.dismiss()}))
@@ -58,6 +58,7 @@ export class LoginEmailPage implements OnInit {
         //this.router.navigateByUrl('home');
       },
       async error => {
+        this.loading.dismiss();
         const alert = await this.alertCtrl.create({
           message: error.message,
           buttons: [{ text: 'Ok', role: 'cancel' }],

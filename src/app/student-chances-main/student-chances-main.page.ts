@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import { finalize } from 'rxjs/operators';
 import { ChanceAnswerService } from '../services/chance-answer.service';
 import { Chance, ChanceService } from '../services/chance.service';
-import { QuizzService } from '../services/quizz.service';
+import { Quizz, QuizzService } from '../services/quizz.service';
 
 @Component({
   selector: 'app-student-chances-main',
@@ -25,6 +25,7 @@ export class StudentChancesMainPage implements OnInit {
   loading2: HTMLIonLoadingElement;
   maxScore: any;
   loading3: HTMLIonLoadingElement;
+  quizz: Quizz = new Quizz();
 
   constructor(private chanceService: ChanceService, 
      private ChanceAnswerService: ChanceAnswerService,
@@ -96,12 +97,14 @@ export class StudentChancesMainPage implements OnInit {
           err => {
           }
         );
-        this.quizzService.getMaxAllowedChances(this.quizzId)
+        this.quizzService.getQuizzSummary(this.quizzId)
         .pipe(finalize(async() => { await this.loading.dismiss()}))
         .subscribe(
           data => {
-            this.maxAllowedChances = data;
-            console.log(this.maxAllowedChances);
+            this.quizz=data;
+            console.log(this.quizz);
+            //this.maxAllowedChances = data;
+            //console.log(this.maxAllowedChances);
 
           },
           err => {
@@ -159,6 +162,11 @@ export class StudentChancesMainPage implements OnInit {
 
   continueChance(chanceId){
     this.router.navigate(['/student-chances-continue'], {queryParams: {chanceId: chanceId} });
+
+  }
+
+  reviewQuizz(chanceId){
+    this.router.navigate(['/quizz-review'], {queryParams: {quizzId: this.quizzId, chanceId:chanceId } });
 
   }
 

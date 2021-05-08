@@ -16,7 +16,7 @@ export class StudentClassroomSearchPage implements OnInit {
   @Input() classroomSearchData = {courseName:'', schoolName:'', teacherName:''};
   classrooms: classroomSearch[] = [];
   username: any;
-  enrollmentData = {status:'pending', requestDate: Date.now(), username:'', classroom_id:''}
+  enrollmentData = {status:'', requestDate: Date.now(), username:'', classroom_id:''}
   constructor(private classroomService: ClassroomService, private enrollmentService: EnrollmentService, 
     private router: Router,
     public loadingController: LoadingController

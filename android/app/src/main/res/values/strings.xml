@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">wajeb</string>
+    <string name="title_activity_main">wajeb</string>
+    <string name="package_name">com.wajeb.starter</string>
+    <string name="custom_url_scheme">com.wajeb.starter</string>
+</resources>

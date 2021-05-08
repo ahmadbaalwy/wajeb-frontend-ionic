@@ -13,11 +13,11 @@
           <ion-label>اسم المجموعة أو اسم الدورة التدريبية </ion-label>
           <ion-input [(ngModel)]="classroomData.classroomName" placeholder="ادخل اسم المجموعة او اسم الدورة التدريبية  "></ion-input> 
         </ion-item>
-        <ion-item hidden=true lines="none">
+        <ion-item lines="none">
           <ion-label> فصل  مغلق</ion-label>
-          <ion-checkbox disabled=true [(ngModel)]="classroomData.private"></ion-checkbox> 
+          <ion-checkbox [(ngModel)]="classroomData.private"></ion-checkbox> 
         </ion-item>
-        <ion-item hidden=true>
+        <ion-item>
           <ion-label>
             لن يتمكن الطلاب من التسجيل إلا بعد موافقتك
           </ion-label>
